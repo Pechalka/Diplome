@@ -43,6 +43,19 @@ namespace Diplome
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
+
+            IBundleTransform jstransformer;
+
+#if DEBUG
+            jstransformer = new NoTransform("text/javascript");
+#else
+      jstransformer = new JsMinify();
+#endif
+
+            var bundle = new Bundle("~/Scripts/App/js", jstransformer);
+            bundle.AddDirectory("~/Scripts/App", "*.js", true);
+            BundleTable.Bundles.Add(bundle);
+
             BundleTable.Bundles.RegisterTemplateBundles();
         }
     }
