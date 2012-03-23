@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Diplom.Models.Company>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="grid-block">
+@foreach (var item in Model) {
+    <div class="item-block">
+        <div class="img-block">
+            <img src="../../Images/nologo.jpg" class="smallImage"/>
+        </div>
+        <div class="content-block">
+            @Html.ActionLink(item.Name, "Details", "Companies", new { id = item.Id }, null) @item.Address           
+            <div>@item.Description</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+}
+</div>
+<div id="category-block">
+    <h2>Категории</h2>
+    @Html.ActionLink("1111111", "Details", "Companies", new { id = 1 }, null)<br/>
+    @Html.ActionLink("1111111", "Details", "Companies", new { id = 1 }, null)<br/>
+    @Html.ActionLink("1111111", "Details", "Companies", new { id = 1 }, null)<br/>
+    @Html.ActionLink("1111111", "Details", "Companies", new { id = 1 }, null)<br/>
+    @Html.ActionLink("1111111", "Details", "Companies", new { id = 1 }, null)<br/>
+    @Html.ActionLink("1111111", "Details", "Companies", new { id = 1 }, null)<br/>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplom", "Diplom\Diplom.csproj", "{B6993CF7-BF13-4DA8-8632-02CB812AAD33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F769B206-07C2-4FD1-9BEE-A122150D0022}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6993CF7-BF13-4DA8-8632-02CB812AAD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6993CF7-BF13-4DA8-8632-02CB812AAD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6993CF7-BF13-4DA8-8632-02CB812AAD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6993CF7-BF13-4DA8-8632-02CB812AAD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F769B206-07C2-4FD1-9BEE-A122150D0022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F769B206-07C2-4FD1-9BEE-A122150D0022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F769B206-07C2-4FD1-9BEE-A122150D0022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F769B206-07C2-4FD1-9BEE-A122150D0022}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

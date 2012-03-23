@@ -1,0 +1,34 @@
+﻿@model Diplom.Models.Company
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div style="float: left; margin-left: 10px;">Отзывы(215)</div>
+    <div style="float: left; margin-left: 10px;">Услуги(4)</div>
+    <div style="float: left; margin-left: 10px;">Заказать</div>
+    <div style="float: left; margin-left: 10px;">Работы</div>
+    <div style="float: left; margin-left: 10px;">Вакансии(2)</div>
+    <div style="clear: both"></div>
+</div>
+<div>
+    <div style="float: left; margin-right: 20px; margin-left:20px;">
+        <img src="@Model.LogoImg" style="width:200px; height:400px;"/>    
+    </div>
+    <div style="float: left;">
+        <h2>@Model.Name</h2>
+        <div class="display-field">
+            <p>@Model.Description<p>
+        </div>
+
+        <div class="display-label">WorkedTime</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.WorkedTime)
+        </div>
+        <div class="display-field">
+            Адрес: @Model.Address
+        </div>   
+    </div>
+    <div style="clear: both;"></div>
+</div>
