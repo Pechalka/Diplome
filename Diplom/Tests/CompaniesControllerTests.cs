@@ -65,6 +65,93 @@ namespace Tests
             Assert.Empty(view.ViewName);
         }
 
+        [Fact]
+        public void ChangeComapny_post_Company_gets_from_repository_and_save_In_it()
+        {
+            var companyFromDb = new Company();
+            repositoryMock.Setup(r => r.GetBy(7)).Returns(companyFromDb);
+
+
+            controler.Change(new ChangeCompanyViewModel{ Id = 7 });
+
+
+            repositoryMock.Verify(r => r.Save(companyFromDb));
+        }
+
+        [Fact]
+        public void ChangeComapny_post_saveCompanyInRepositpory()
+        {
+            repositoryMock.Setup(r => r.GetBy(It.IsAny<int>())).Returns(new Company());
+
+            var form = new ChangeCompanyViewModel
+                           {
+                               Name = "Name",
+                               Description = "Description",
+                               Address = "Address"
+                           };
+
+
+            controler.Change(form);
+
+
+            repositoryMock.Verify(r => r.Save(It.Is<Company>(
+                    c => c.Name == form.Name &&
+                         c.Description == form.Description &&
+                         c.Address == form.Address 
+                )));
+
+        }
+
+        [Fact]
+        public void ChangeComapny_post_redirectToDetailsPage()
+        {
+            repositoryMock.Setup(r => r.GetBy(It.IsAny<int>())).Returns(new Company());
+            const int companyId = 88;
+
+            var view = controler.Change(new ChangeCompanyViewModel { Id = companyId }) as RedirectToRouteResult;
+
+
+            Assert.Equal("Details", view.RouteValues["action"]);
+            Assert.Equal(companyId, view.RouteValues["id"]);
+        }
+
+        [Fact]
+        public void ChangeComapny_get_return_viewModel_from_repository()
+        {
+            var company = new Company
+                              {
+                                  Id = 7,
+                                  Address = "Address",
+                                  Description = "Description",
+                                  Name = "Name"
+                              };
+            repositoryMock.Setup(r => r.GetBy(7)).Returns(company);
+
+
+            
+            var view = controler.Change(7) as ViewResult;
+            var viewModel = view.Model as ChangeCompanyViewModel;
+
+
+
+            Assert.Equal(viewModel.Name, company.Name);
+            Assert.Equal(viewModel.Description, company.Description);
+            Assert.Equal(viewModel.Address, company.Address);
+            Assert.Equal(viewModel.Id, company.Id);
+
+        }
+
+        [Fact]
+        public void ChangeComapny_get_display_in_valid_view()
+        {
+            repositoryMock.Setup(r => r.GetBy(7)).Returns(new Company());
+
+
+            var view = controler.Change(7) as ViewResult;
+
+
+            Assert.Empty(view.ViewName);
+        }
     }
 
 

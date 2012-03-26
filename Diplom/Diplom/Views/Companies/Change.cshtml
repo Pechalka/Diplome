@@ -1,0 +1,21 @@
+﻿@model Diplom.ViewModels.ChangeCompanyViewModel
+
+@{
+    ViewBag.Title = "Change";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Change</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.EditorFor(_ => _.Name)
+    @Html.EditorFor(_ => _.Address)
+    @Html.EditorFor(_ => _.Description)
+    @Html.HiddenFor(_ => _.Id)
+    
+    
+    <input type="submit" value="Сохранить"/>
+    @Html.ActionLink("Отмена", "Details", new { id = Model.Id }, null)
+}
+

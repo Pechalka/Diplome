@@ -40,5 +40,35 @@ namespace Diplom.Controllers
         {
             return View(new CreateComanyViewModel());
         }
+
+        [HttpPost]
+        public ActionResult Change(ChangeCompanyViewModel form)
+        {
+            var company = _companyRepository.GetBy(form.Id);
+
+            company.Address = form.Address;
+            company.Description = form.Description;
+            company.Name = form.Name;
+
+            _companyRepository.Save(company);
+
+            return RedirectToAction("Details", new { form.Id });
+        }
+
+        [HttpGet]
+        public ViewResult Change(int id)
+        {
+            var company = _companyRepository.GetBy(id);
+
+            var viewModel = new ChangeCompanyViewModel
+                                {
+                                    Id = company.Id,
+                                    Name = company.Name,
+                                    Description = company.Description,
+                                    Address = company.Address
+                                };
+
+            return View(viewModel);
+        }
     }
 }
