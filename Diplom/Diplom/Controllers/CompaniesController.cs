@@ -13,11 +13,12 @@ namespace Diplom.Controllers
             _companyRepository = companyRepository;
         }
 
-        public CompaniesController():this(new CompanyRepositoryFake())
+        public CompaniesController()
+            : this(new CompanyRepositoryMongo())
         {
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             return View(_companyRepository.GetBy(id));
         }
@@ -56,7 +57,7 @@ namespace Diplom.Controllers
         }
 
         [HttpGet]
-        public ViewResult Change(int id)
+        public ViewResult Change(string id)
         {
             var company = _companyRepository.GetBy(id);
 

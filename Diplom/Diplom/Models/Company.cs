@@ -1,8 +1,12 @@
-﻿namespace Diplom.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Diplom.Models
 {
     public class Company
     {
-        public int Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)] 
+        public string Id { get; set; }
 
         public string Description { get; set; }
 
@@ -10,12 +14,12 @@
 
         public string Address { get; set; }
 
-        private string _LogoImg;
+        public string LogoImg { get; set; }
 
-        public string LogoImg {
-            get { return _LogoImg ?? "nologo.jpg"; }
-            set { _LogoImg = value; }
-        }
+        //public string LogoImg {
+        //    get { return _LogoImg ?? "nologo.jpg"; }
+        //    set { _LogoImg = value; }
+        //}
 
         public string Name { get; set; }
 

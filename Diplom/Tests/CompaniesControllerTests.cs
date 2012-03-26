@@ -44,14 +44,14 @@ namespace Tests
         [Fact]
         public void CreatePost_succesCreate_redirectToNewCompanyDetail()
         {
-            repositoryMock.Setup(r => r.Save(It.IsAny<Company>())).Returns(27);
+            repositoryMock.Setup(r => r.Save(It.IsAny<Company>())).Returns("27");
 
 
             var view = controler.Create(new CreateComanyViewModel()) as RedirectToRouteResult;
 
 
             Assert.Equal("Details", view.RouteValues["action"]);
-            Assert.Equal(27, view.RouteValues["id"]);
+            Assert.Equal("27", view.RouteValues["id"]);
         }
 
 
@@ -69,10 +69,10 @@ namespace Tests
         public void ChangeComapny_post_Company_gets_from_repository_and_save_In_it()
         {
             var companyFromDb = new Company();
-            repositoryMock.Setup(r => r.GetBy(7)).Returns(companyFromDb);
+            repositoryMock.Setup(r => r.GetBy("7")).Returns(companyFromDb);
 
 
-            controler.Change(new ChangeCompanyViewModel{ Id = 7 });
+            controler.Change(new ChangeCompanyViewModel{ Id = "7" });
 
 
             repositoryMock.Verify(r => r.Save(companyFromDb));
@@ -81,7 +81,7 @@ namespace Tests
         [Fact]
         public void ChangeComapny_post_saveCompanyInRepositpory()
         {
-            repositoryMock.Setup(r => r.GetBy(It.IsAny<int>())).Returns(new Company());
+            repositoryMock.Setup(r => r.GetBy(It.IsAny<string>())).Returns(new Company());
 
             var form = new ChangeCompanyViewModel
                            {
@@ -105,8 +105,8 @@ namespace Tests
         [Fact]
         public void ChangeComapny_post_redirectToDetailsPage()
         {
-            repositoryMock.Setup(r => r.GetBy(It.IsAny<int>())).Returns(new Company());
-            const int companyId = 88;
+            repositoryMock.Setup(r => r.GetBy(It.IsAny<string>())).Returns(new Company());
+            const string companyId = "88";
 
             var view = controler.Change(new ChangeCompanyViewModel { Id = companyId }) as RedirectToRouteResult;
 
@@ -120,16 +120,16 @@ namespace Tests
         {
             var company = new Company
                               {
-                                  Id = 7,
+                                  Id = "7",
                                   Address = "Address",
                                   Description = "Description",
                                   Name = "Name"
                               };
-            repositoryMock.Setup(r => r.GetBy(7)).Returns(company);
+            repositoryMock.Setup(r => r.GetBy("7")).Returns(company);
 
 
             
-            var view = controler.Change(7) as ViewResult;
+            var view = controler.Change("7") as ViewResult;
             var viewModel = view.Model as ChangeCompanyViewModel;
 
 
@@ -144,10 +144,10 @@ namespace Tests
         [Fact]
         public void ChangeComapny_get_display_in_valid_view()
         {
-            repositoryMock.Setup(r => r.GetBy(7)).Returns(new Company());
+            repositoryMock.Setup(r => r.GetBy("7")).Returns(new Company());
 
 
-            var view = controler.Change(7) as ViewResult;
+            var view = controler.Change("7") as ViewResult;
 
 
             Assert.Empty(view.ViewName);

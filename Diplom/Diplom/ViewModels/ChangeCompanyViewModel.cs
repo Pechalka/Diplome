@@ -13,6 +13,6 @@ namespace Diplom.ViewModels
 
         public string Address { get; set; }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }
