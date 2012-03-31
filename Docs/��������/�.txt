@@ -5,3 +5,7 @@ jasmin
 git
 asp.net mvc 4 
 C#
+
+
+
+бла бла бла
