@@ -1,0 +1,7 @@
+cqrs, event sorcing
+
+xunit
+jasmin
+git
+asp.net mvc 4 
+C#
