@@ -75,5 +75,10 @@ namespace Diplom.Models
 
             return company.Id;
         }
+
+        public List<Company> GetAllBy(string category)
+        {
+            return companies.Select(c => c.Value).ToList();
+        }
     }
 }

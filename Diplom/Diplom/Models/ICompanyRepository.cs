@@ -7,5 +7,6 @@ namespace Diplom.Models
         Company GetBy(string id);
         List<Company> GetAll();
         string Save(Company company);
+        List<Company> GetAllBy(string category);
     }
 }

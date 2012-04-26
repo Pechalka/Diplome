@@ -5,28 +5,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="grid-block">
-@foreach (var item in Model) {
-    <div class="item-block">
-        <div class="img-block">
-            <img src="../../Images/nologo.jpg" class="smallImage"/>
+
+       <div class="span9">
+            @if (Model.Count() == 0)
+            {
+                <p>нечего не найдено</p>
+            }
+            else
+            {
+                foreach (var item in Model)
+                 {
+                     <div class="row">
+                         <div class="span2">
+                             <a href="@Url.Action("Details", "Companies", new {id = item.Id})" class="thumbnail">
+                                 <img src="http://placehold.it/160x120" alt="">
+                             </a>
+                         </div>
+                         <div class="span7">
+                             <h3>@item.Name</h3>
+                             <p>@item.Description</p>
+                             @Html.ActionLink("Подробней", "Details", "Companies", new {id = item.Id}, new {style = "float: right;", @class = "btn"})
+                         </div>
+                     </div>
+                 }
+            }
         </div>
-        <div class="content-block">
-            @Html.ActionLink(item.Name, "Details", "Companies", new { id = item.Id }, null) @item.Address           
-            <div>@item.Description</div>
+        <div class="span3">    
+        @{
+            var category = ViewData["category"] as string;
+            
+        }
+        
+        <ul class="nav nav-list well">
+          <li class="nav-header">Категории</li>
+          <li @(category == "" ? "class=active" : "")>@Html.ActionLink("Все", "List", "Companies")</li>
+          <li @(category == "АВТОЗАПЧАСТИ" ? "class=active" : "")>@Html.ActionLink("АВТОЗАПЧАСТИ", "List", "Companies", new { category = "АВТОЗАПЧАСТИ" }, null)</li>
+          <li @(category == "БЫТОВЫЕ УСЛУГИ" ? "class=active" : "")>@Html.ActionLink("БЫТОВЫЕ УСЛУГИ", "List", "Companies", new { category = "БЫТОВЫЕ УСЛУГИ" }, null)</li>
+          <li @(category == "ФИТНЕС И КРАСОТА" ? "class=active" : "")>@Html.ActionLink("ФИТНЕС И КРАСОТА", "List", "Companies", new { category = "ФИТНЕС И КРАСОТА" }, null)</li>
+          <li @(category == "СТРОИТЕЛЬСТВО И РЕМОНТ" ? "class=active" : "")>@Html.ActionLink("СТРОИТЕЛЬСТВО И РЕМОНТ", "List", "Companies", new { category = "СТРОИТЕЛЬСТВО И РЕМОНТ" }, null)</li>
+          <li @(category == "ОБРАЗОВАНИЕ, КУРСЫ" ? "class=active" : "")>@Html.ActionLink("ОБРАЗОВАНИЕ, КУРСЫ", "List", "Companies", new { category = "ОБРАЗОВАНИЕ, КУРСЫ" }, null)</li>
+          <li @(category == "МЕБЕЛЬ И ИНТЕРЬЕР" ? "class=active" : "")>@Html.ActionLink("МЕБЕЛЬ И ИНТЕРЬЕР", "List", "Companies", new { category = "МЕБЕЛЬ И ИНТЕРЬЕР" }, null)</li>
+        </ul>
         </div>
-        <div class="clear"></div>
-    </div>
-    
-}
-</div>
-<div id="category-block">
-    <h2>Категории</h2>
-    @Html.ActionLink("1111111", "List", "Companies")<br/>
-    @Html.ActionLink("1111111", "List", "Companies")<br/>
-    @Html.ActionLink("1111111", "List", "Companies")<br/>
-    @Html.ActionLink("1111111", "List", "Companies")<br/>
-    @Html.ActionLink("1111111", "List", "Companies")<br/>
-    @Html.ActionLink("1111111", "List", "Companies")<br/>
-</div>
-<div class="clear"></div>
+

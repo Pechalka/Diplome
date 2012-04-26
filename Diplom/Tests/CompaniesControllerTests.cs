@@ -33,12 +33,12 @@ namespace Tests
         }
 
         [Fact]
-        public void CreatePost_setNameAndDescription_saveComanyInRepositoryAnd()
+        public void CreatePost_setNameAndDescriptionAndCategory_saveComanyInRepositoryAnd()
         {
-            controler.Create(new CreateComanyViewModel { Name = "Name", Description = "Description" });
+            controler.Create(new CreateComanyViewModel { Name = "Name", Description = "Description", Category = "Category" });
 
 
-            repositoryMock.Verify(r => r.Save(It.Is<Company>(c => c.Name == "Name" && c.Description == "Description")));
+            repositoryMock.Verify(r => r.Save(It.Is<Company>(c => c.Name == "Name" && c.Description == "Description" && c.Category == "Category")));
         }
 
         [Fact]

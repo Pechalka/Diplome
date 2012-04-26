@@ -23,21 +23,27 @@ namespace Diplom.Controllers
             return View(_companyRepository.GetBy(id));
         }
 
-        public ActionResult List()
+        public ActionResult List(string category = "")
         {
-            return View(_companyRepository.GetAll());
+            ViewData["category"] = category;
+            return View(_companyRepository.GetAllBy(category));
         }
 
         [HttpPost]
         public ActionResult Create(CreateComanyViewModel form)
         {
-            var id = _companyRepository.Save(Company.Create(form.Name, form.Description));
+            var id = _companyRepository.Save(new Company
+                                                 {
+                                                     Category = form.Category,
+                                                     Name = form.Name,
+                                                     Description = form.Description
+                                                 });
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("Details", new {id});
         }
 
         [HttpGet]
-         public ActionResult Create()
+        public ActionResult Create()
         {
             return View(new CreateComanyViewModel());
         }
@@ -53,7 +59,7 @@ namespace Diplom.Controllers
 
             _companyRepository.Save(company);
 
-            return RedirectToAction("Details", new { form.Id });
+            return RedirectToAction("Details", new {form.Id});
         }
 
         [HttpGet]
@@ -70,6 +76,12 @@ namespace Diplom.Controllers
                                 };
 
             return View(viewModel);
+        }
+
+
+        public ActionResult Test()
+        {
+            return View();
         }
     }
 }

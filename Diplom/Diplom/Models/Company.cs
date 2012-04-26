@@ -5,6 +5,8 @@ namespace Diplom.Models
 {
     public class Company
     {
+        public string Category { get; set; }
+
         [BsonRepresentation(BsonType.ObjectId)] 
         public string Id { get; set; }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 
 namespace Diplom.Models
 {
@@ -31,10 +32,19 @@ namespace Diplom.Models
 
         public string Save(Company company)
         {
-            
+            company.Category = company.Category.ToUpper();
             companies.Save(company);
 
             return company.Id;
+        }
+
+        public List<Company> GetAllBy(string category)
+        {
+            if (string.IsNullOrEmpty(category))
+                return GetAll();
+
+            category = category.ToUpper();
+            return companies.Find(Query.EQ("Category", category)).ToList();
         }
     }
 }
