@@ -21,6 +21,12 @@ namespace Diplom
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    "Companies", // Route name
+            //    "{category}/{page}", // URL with parameters
+            //    new { controller = "Companies", action = "List", category = UrlParameter.Optional, page = UrlParameter.Optional } // Parameter defaults
+            //    );
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters

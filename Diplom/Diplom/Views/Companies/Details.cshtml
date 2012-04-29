@@ -1,7 +1,7 @@
 ﻿@model Diplom.Models.Company
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,26 +17,19 @@
                 </ul>
 }
 
-<div class="span9">
-<div class="row">
-    <div class="span4">
-        <a href="#" class="thumbnail">
-            <img src="http://placehold.it/360x268" alt="">
-          </a>
 
-    </div>
+<div class="span4">
+    <a href="#" class="thumbnail">
+        <img src="http://placehold.it/360x268" alt="">
+        </a>
 
-    <div class="span5">
-        <h1>@Model.Name</h1>
-        <p>@Model.Description</p>
-    </div>
 </div>
-        </div>
-        <div class="span3">    
-            <ul class="nav nav-list">
-              <li class="active"><a href="#lA"><i class="icon-comment"></i> Отзывы (215)</a></li>
-              <li><a href="#lB" ><i class="icon-wrench"></i> Услуги (4)</a></li>
-              <li><a href="#lC" "><i class="icon-camera"></i> Фотографии</a></li>
-              <li><a href="#lC" "><i class="icon-user"></i> Вакансии (2)</a></li>
-            </ul>
-        </div>
+
+<div class="span5">
+    <h1>@Model.Name</h1>
+    <p>@Model.Description</p>
+</div>
+
+<div class="span3">    
+    @Html.Partial("CompanyNavigation", new CompanyNavigationViewModel{ CompanyId = Model.Id, Selected = "1"})
+</div>

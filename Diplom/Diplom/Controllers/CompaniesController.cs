@@ -84,6 +84,26 @@ namespace Diplom.Controllers
         }
 
 
+        public ActionResult Reviews(string id)
+        {
+            var company = _companyRepository.GetBy(id);
+            return View(new CompanyViewModel
+            {
+                Name = company.Name,
+                Id = company.Id
+            });
+        }
+
+        public ActionResult Photos(string id)
+        {
+            var company = _companyRepository.GetBy(id);
+            return View(new CompanyViewModel
+                            {
+                                Name = company.Name,
+                                Id = company.Id
+                            });
+        }
+
         public ActionResult Test()
         {
             return View();
@@ -91,6 +111,17 @@ namespace Diplom.Controllers
     }
 }
 
+public class CompanyNavigationViewModel
+{
+    public string CompanyId { get; set; }
+    public string Selected { get; set; }
+}
+
+public class CompanyViewModel
+{
+    public string Name { get; set; }
+    public string Id { get; set; }
+}
 
 public class CompaniesListViewModel
 {

@@ -25,42 +25,42 @@
 }
 
 
-       <div class="span9">
-            @if (Model.Companies.Count() == 0)
+<div class="span9">
+    @if (Model.Companies.Count() == 0)
+    {
+        <p>нечего не найдено</p>
+    }
+    else
+    {
+        foreach (var item in Model.Companies)
             {
-                <p>нечего не найдено</p>
+                <div class="row">
+                    <div class="span2">
+                        <a href="@Url.Action("Details", "Companies", new {id = item.Id})" class="thumbnail">
+                            <img src="http://placehold.it/160x120" alt="">
+                        </a>
+                    </div>
+                    <div class="span7">
+                        <h3>@item.Name</h3>
+                        <p>@item.Description</p>
+                        @Html.ActionLink("Подробней", "Details", "Companies", new {id = item.Id}, new {style = "float: right;", @class = "btn"})
+                    </div>
+                </div>
             }
-            else
-            {
-                foreach (var item in Model.Companies)
-                 {
-                     <div class="row">
-                         <div class="span2">
-                             <a href="@Url.Action("Details", "Companies", new {id = item.Id})" class="thumbnail">
-                                 <img src="http://placehold.it/160x120" alt="">
-                             </a>
-                         </div>
-                         <div class="span7">
-                             <h3>@item.Name</h3>
-                             <p>@item.Description</p>
-                             @Html.ActionLink("Подробней", "Details", "Companies", new {id = item.Id}, new {style = "float: right;", @class = "btn"})
-                         </div>
-                     </div>
-                 }
-            }     
+    }     
  
-      @Html.PageLinks(Model.CurrentPage, Model.TotalPages, page => Url.Action("List", "Companies", new { Model.Category, page }));
-        </div>
-        <div class="span3">    
-        <ul class="nav nav-list well">
-          <li class="nav-header">Категории</li>
-          <li @(Model.Category == "" ? "class=active" : "")>@Html.ActionLink("Все", "List", "Companies")</li>
-          <li @(Model.Category == "АВТОЗАПЧАСТИ" ? "class=active" : "")>@Html.ActionLink("АВТОЗАПЧАСТИ", "List", "Companies", new { category = "АВТОЗАПЧАСТИ" }, null)</li>
-          <li @(Model.Category == "БЫТОВЫЕ УСЛУГИ" ? "class=active" : "")>@Html.ActionLink("БЫТОВЫЕ УСЛУГИ", "List", "Companies", new { category = "БЫТОВЫЕ УСЛУГИ" }, null)</li>
-          <li @(Model.Category == "ФИТНЕС И КРАСОТА" ? "class=active" : "")>@Html.ActionLink("ФИТНЕС И КРАСОТА", "List", "Companies", new { category = "ФИТНЕС И КРАСОТА" }, null)</li>
-          <li @(Model.Category == "СТРОИТЕЛЬСТВО И РЕМОНТ" ? "class=active" : "")>@Html.ActionLink("СТРОИТЕЛЬСТВО И РЕМОНТ", "List", "Companies", new { category = "СТРОИТЕЛЬСТВО И РЕМОНТ" }, null)</li>
-          <li @(Model.Category == "ОБРАЗОВАНИЕ, КУРСЫ" ? "class=active" : "")>@Html.ActionLink("ОБРАЗОВАНИЕ, КУРСЫ", "List", "Companies", new { category = "ОБРАЗОВАНИЕ, КУРСЫ" }, null)</li>
-          <li @(Model.Category == "МЕБЕЛЬ И ИНТЕРЬЕР" ? "class=active" : "")>@Html.ActionLink("МЕБЕЛЬ И ИНТЕРЬЕР", "List", "Companies", new { category = "МЕБЕЛЬ И ИНТЕРЬЕР" }, null)</li>
-        </ul>
-        </div>
+    @Html.PageLinks(Model.CurrentPage, Model.TotalPages, page => Url.Action("List", "Companies", new { Model.Category, page }));
+</div>
+<div class="span3">    
+    <ul class="nav nav-list well">
+        <li class="nav-header">Категории</li>
+        <li @(Model.Category == "" ? "class=active" : "")>@Html.ActionLink("Все", "List", "Companies")</li>
+        <li @(Model.Category == "АВТОЗАПЧАСТИ" ? "class=active" : "")>@Html.ActionLink("АВТОЗАПЧАСТИ", "List", "Companies", new { category = "АВТОЗАПЧАСТИ" }, null)</li>
+        <li @(Model.Category == "БЫТОВЫЕ УСЛУГИ" ? "class=active" : "")>@Html.ActionLink("БЫТОВЫЕ УСЛУГИ", "List", "Companies", new { category = "БЫТОВЫЕ УСЛУГИ" }, null)</li>
+        <li @(Model.Category == "ФИТНЕС И КРАСОТА" ? "class=active" : "")>@Html.ActionLink("ФИТНЕС И КРАСОТА", "List", "Companies", new { category = "ФИТНЕС И КРАСОТА" }, null)</li>
+        <li @(Model.Category == "СТРОИТЕЛЬСТВО И РЕМОНТ" ? "class=active" : "")>@Html.ActionLink("СТРОИТЕЛЬСТВО И РЕМОНТ", "List", "Companies", new { category = "СТРОИТЕЛЬСТВО И РЕМОНТ" }, null)</li>
+        <li @(Model.Category == "ОБРАЗОВАНИЕ, КУРСЫ" ? "class=active" : "")>@Html.ActionLink("ОБРАЗОВАНИЕ, КУРСЫ", "List", "Companies", new { category = "ОБРАЗОВАНИЕ, КУРСЫ" }, null)</li>
+        <li @(Model.Category == "МЕБЕЛЬ И ИНТЕРЬЕР" ? "class=active" : "")>@Html.ActionLink("МЕБЕЛЬ И ИНТЕРЬЕР", "List", "Companies", new { category = "МЕБЕЛЬ И ИНТЕРЬЕР" }, null)</li>
+    </ul>
+</div>
 

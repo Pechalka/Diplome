@@ -1,0 +1,36 @@
+﻿@model CompanyViewModel
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                <li>
+                    <span class="divider">/</span>
+                    @Html.ActionLink(Model.Name, "Details", "Companies", new { id = Model.Id }, null)  
+                </li>
+                <li>
+                    <span class="divider">/</span>
+                    Фотографии 
+                </li>
+                </ul>
+}
+<div class="span9">
+<div class="row">
+    @for (int n = 1; n <= 4; n++)
+    {
+        <div class="span3">
+            <a href="#" class="thumbnail">
+                <img src="http://placehold.it/260x180" alt="">
+            </a>
+        </div>
+    }
+    </div>
+</div>
+<div class="span3">    
+    @Html.Partial("CompanyNavigation", new CompanyNavigationViewModel{ CompanyId = Model.Id, Selected = "4"})
+</div>
