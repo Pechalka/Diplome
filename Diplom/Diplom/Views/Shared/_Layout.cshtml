@@ -10,29 +10,10 @@
 <body>
     <div class="container">
     <div class="row">
-    @{
-        var category = ViewData["category"] as string;
+        @if (IsSectionDefined("Breadcrumb"))
+        {
+            @RenderSection("Breadcrumb")
         }
-        <ul class="breadcrumb">
-      <li>
-        @Html.ActionLink("Главная", "List", "Companies") @if (!string.IsNullOrEmpty( category))
-                                                         {
-                                                             <span class="divider">/</span>
-                                                         }
-      </li>
-      @{
-          
-                                                             if (!string.IsNullOrEmpty( category))
-          {
-              <li>
-                     <li class="active">@category</li>   
-                @*@Html.ActionLink(category, "List", "Companies", new { category = category }, null) <span class="divider">/</span>*@
-              </li>
-          }
-      }
-      
-      @*<li class="active">Ив Роше</li>*@
-    </ul>
     </div>
     <div class="row">
          @RenderBody()

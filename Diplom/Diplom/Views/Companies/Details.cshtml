@@ -4,6 +4,19 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                    <span class="divider">/</span>
+                    <li>
+                            <li class="active">@Model.Name</li>   
+                    </li>
+                </ul>
+}
+
 <div class="span9">
 <div class="row">
     <div class="span4">

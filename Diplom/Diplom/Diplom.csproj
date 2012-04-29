@@ -83,6 +83,7 @@
     <Compile Include="Models\CompanyRepositoryFake.cs" />
     <Compile Include="Models\CompanyRepositoryMongo.cs" />
     <Compile Include="Models\ICompanyRepository.cs" />
+    <Compile Include="PagingHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangeCompanyViewModel.cs" />
     <Compile Include="ViewModels\CreateComanyViewModel.cs" />
