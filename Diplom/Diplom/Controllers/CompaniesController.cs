@@ -1,183 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
-using Diplom.Models;
-using Diplom.ViewModels;
-using MongoDB.Driver;
-using MongoDB.Driver.Builders;
+using Domain;
+using Domain.Commands;
+using Domain.ViewModel;
+using Domain.ViewModel.Queries;
+using Infrastructure.CQRS;
 
 namespace Diplom.Controllers
 {
-    public class CompaniesController : Controller
+    public class CompaniesController : CQRSController
     {
-        private readonly ICompanyRepository _companyRepository;
-
-        public CompaniesController(ICompanyRepository companyRepository)
+        public ActionResult Details(Guid id)
         {
-            _companyRepository = companyRepository;
-        }
-
-        public CompaniesController()
-            : this(new CompanyRepositoryMongo())
-        {
-        }
-
-        public ActionResult Details(string id)
-        {
-            return View(_companyRepository.GetBy(id));
-        }
-
-        public ActionResult List(string category = "", int page = 1)
-        {
-            var viewModel = GetPageOfCompaniesQuery.Execute(category, page);
-            return View(viewModel);
+            return View(For<Company>().GetBy(id));
         }
 
         [HttpPost]
-        public ActionResult Create(CreateComanyViewModel form)
+        public ActionResult Create(CreateComanyCommand form)
         {
-            var id = _companyRepository.Save(new Company
-                                                 {
-                                                     Category = form.Category,
-                                                     Name = form.Name,
-                                                     Description = form.Description
-                                                 });
+            form.Id = Guid.NewGuid();
 
-            return RedirectToAction("Details", new {id});
+            return Handle(form,
+                RedirectToAction("Details", new { form.Id }), 
+                RedirectToAction("Create"));
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View(new CreateComanyViewModel());
+            return View(new CreateComanyCommand());
         }
 
-        [HttpPost]
-        public ActionResult Change(ChangeCompanyViewModel form)
+
+
+
+
+
+        public ActionResult Reviews(Guid id)
         {
-            var company = _companyRepository.GetBy(form.Id);
+            var company = For<Company>().GetBy(id);
+            return View(new CompanyViewModel
+            {
+                Name = company.Name,
+                Id = company.Id.ToString()
+            });
+        }
 
-            company.Address = form.Address;
-            company.Description = form.Description;
-            company.Name = form.Name;
-
-            _companyRepository.Save(company);
-
-            return RedirectToAction("Details", new {form.Id});
+        public ActionResult Photos(Guid id)
+        {
+            var company = For<Company>().GetBy(id);
+            return View(new CompanyViewModel
+                            {
+                                Name = company.Name,
+                                Id = company.Id.ToString()
+                            });
         }
 
         [HttpGet]
-        public ViewResult Change(string id)
+        public ViewResult Change(Guid id)
         {
-            var company = _companyRepository.GetBy(id);
+            var company = For<Company>().GetBy(id);
 
-            var viewModel = new ChangeCompanyViewModel
-                                {
-                                    Id = company.Id,
-                                    Name = company.Name,
-                                    Description = company.Description,
-                                    Address = company.Address
-                                };
+            var viewModel = new ChangeCompanyCommand
+            {
+                Id = company.Id,
+                Name = company.Name,
+                Description = company.Description,
+                Address = company.Address
+            };
 
             return View(viewModel);
         }
 
-
-        public ActionResult Reviews(string id)
+        [HttpPost]
+        public ActionResult Change(ChangeCompanyCommand form)
         {
-            var company = _companyRepository.GetBy(id);
-            return View(new CompanyViewModel
-            {
-                Name = company.Name,
-                Id = company.Id
-            });
+            return Handle(form,
+                          RedirectToAction("Details", new { form.Id }),
+                          RedirectToAction("Change"));
         }
 
-        public ActionResult Photos(string id)
+
+        public ActionResult List(string category = "", int page = 1)
         {
-            var company = _companyRepository.GetBy(id);
-            return View(new CompanyViewModel
-                            {
-                                Name = company.Name,
-                                Id = company.Id
-                            });
+            var q = new GetPageOfCompaniesQuery();
+            q.Category = category;
+            q.Page = page;
+            q.PageSize = 10;
+
+            return View(q.Execute());
+            //return
+            //    For<CompaniesListViewModel>()
+            //    .Execute<IGetPageOfCompaniesQuery>()
+            //    .WithParams(q =>
+            //    {
+            //        q.Category = category;
+            //        q.Page = page;
+            //        q.PageSize = 10;
+            //    });
         }
-
-        public ActionResult Test()
-        {
-            return View();
-        }
     }
-}
 
-public class CompanyNavigationViewModel
-{
-    public string CompanyId { get; set; }
-    public string Selected { get; set; }
-}
 
-public class CompanyViewModel
-{
-    public string Name { get; set; }
-    public string Id { get; set; }
-}
-
-public class CompaniesListViewModel
-{
-    public string Category { get; set; }
-    public int CurrentPage { get; set; }
-    public int TotalPages { get; set; }
-    public List<Company> Companies { get; set; }
-}
-
-public class GetPageOfCompaniesQuery
-{
-    public static CompaniesListViewModel Execute(string category, int page, int pageSize = 5)
+    public class CompanyReviewsViewModel
     {
-        IMongoQuery query = null;   // all
-        if (!string.IsNullOrEmpty(category))
-            query = Query.EQ("Category", category.ToUpper());
-
-        int totalPages;
-        var companies = MongoHelper.GetCollectionOf<Company>().GetPage(query, page, pageSize,
-                                                    out totalPages);
-
-
-        return new CompaniesListViewModel
-                   {
-                       Category = category,
-                       CurrentPage = page,
-                       TotalPages = totalPages,
-                       Companies = companies
-                   };
+        public Guid CompanyId { get; set; }
+        public string Name { get; set; }
+        public List<CompanyReviewViewModel> Reviews { get; set; }
     }
 
-
+    public class CompanyReviewViewModel
+    {
+        public string AvatarUrl { get; set; }
+        public string Date { get; set; }
+        public string Text { get; set; }
+        public bool IsGood { get; set; }
+    }
 }
 
 
-public static class MongoHelper
-{
-    public static List<T> GetPage<T>(this MongoCollection<T> collection, IMongoQuery query, int page, int pageSize, out int totalPages)
-    {
-        var getCountCursor = new MongoCursor<T>(collection, query);
-        var mainCountCursor = new MongoCursor<T>(collection, query);
 
-        long countItems = getCountCursor.Count();
-        totalPages = (int)Math.Ceiling((double)countItems / pageSize);
 
-        return mainCountCursor
-            .SetSkip((page - 1) * pageSize)
-            .SetLimit(pageSize)
-            .ToList();
-    }
 
-    public static MongoCollection<T> GetCollectionOf<T>()
-    {
-        var server = MongoServer.Create();
-        var database = server.GetDatabase("Diplome");
 
-         return database.GetCollection<T>("companies");
-    }
-}
+
+

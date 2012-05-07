@@ -68,6 +68,18 @@
       <Project>{B6993CF7-BF13-4DA8-8632-02CB812AAD33}</Project>
       <Name>Diplom</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain.Commands\Domain.Commands.csproj">
+      <Project>{0EF90729-1B96-4836-A829-D03163A2A906}</Project>
+      <Name>Domain.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{1CE250FE-3CA0-4AB8-AEE1-62AC22471062}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{6378AEA9-BFAA-4F7A-BC99-FF2092BE2100}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
