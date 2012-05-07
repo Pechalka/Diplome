@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using Diplom.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
@@ -19,6 +15,38 @@ namespace Tests
         public string Name { get; set; }
     }
 
+
+    public abstract class Entity
+    {
+        public ObjectId Id { get; set; }
+    }
+
+    public class User : Entity
+    {
+        public string Name { get; private set; }
+        public User(string name)
+        {
+            Name = name;
+            roles = new List<string>();
+        }
+
+
+        private  List<string> roles;
+
+        public IEnumerable<string> Roles
+        {
+            get { return roles.AsReadOnly(); }
+
+        }
+
+        public void AddRole(string role)
+        {
+            roles.Add(role);
+        }
+
+    }
+
+
     public class MOngoTests
     {
         private MongoServer server;
@@ -31,6 +59,46 @@ namespace Tests
             database = server.GetDatabase("Diplome");
             collection = database.GetCollection<Test>("companies");
            collection.RemoveAll();
+        }
+
+        [Fact]
+        public void CanSaveCollection()
+        {
+            MongoHelper.SetPrivateFieldsFindOn();
+
+            var user = MongoHelper.GetCollection<User>();
+            user.Drop();
+
+            var u = new User("Vasa");
+            u.AddRole("Admin");
+            user.Save(u);
+
+            var id = u.Id;
+
+            var u2 = user.FindOneById(id);
+
+            Assert.Equal(u2.Roles.Count(), 1);
+        }
+
+
+        [Fact]
+        public void CanSave()
+        {
+            var u = new User("Vasa");
+
+            var user = MongoHelper.GetCollection<User>();
+            user.Drop();
+
+            user.Save(u);
+
+            Assert.NotNull(u.Id);
+
+            var id = u.Id;
+;
+
+            var u2 = user.FindOneById(id);
+
+            Assert.Equal(u2.Name, "Vasa");
         }
 
         [Fact]
