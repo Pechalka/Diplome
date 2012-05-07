@@ -1,20 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Infrastructure.CQRS;
 
-namespace Diplom.ViewModels
+namespace Domain.Commands
 {
-    public class CreateComanyViewModel
+    public class CreateComanyCommand : ICommand
     {
+        public Guid Id { get; set; }
+
         [Required]
-       // [Display("Название компании")]
+        // [Display("Название компании")]
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public string Category { get; set; }
 
-        public List<SelectListItem> CategoriesDropdown { 
+        public List<SelectListItem> CategoriesDropdown
+        {
             get
             {
                 return new List<SelectListItem>
