@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using Castle.MicroKernel;
@@ -24,6 +25,15 @@ namespace Diplom
             var container = new WindsorContainer();
 
 
+            // add repositories to container for each type of aggregate roots
+            foreach (Type agg in from t in typeof(Company).Assembly.GetTypes()
+                                 where typeof(IAggregateRoot).IsAssignableFrom(t)
+                                 select t)
+            {
+                var rep = typeof(EventSourcedRepository<>).MakeGenericType(agg);
+                Configure(rep, container);
+            }
+
             // add command handlers
             foreach (Type handlers in from t in typeof(CreateComanyCommandHandler).Assembly.GetTypes()
                                       where t.ImplementsGenericDefinition(typeof(ICommandHandler<>))
@@ -45,6 +55,14 @@ namespace Diplom
 
             // Configure aggregate roots
             AggregateRoot.CreateDelegatesForAggregatesIn(typeof(Company).Assembly);
+
+            container.Kernel.Register(
+                Component.For<IContext>().ImplementedBy<WebContext>(),
+                Component.For<IEventBus>().ImplementedBy<ContainerEventBus>(),
+                Component.For<IPersistenceManager>().ImplementedBy<MongoPersistenceManager>(),
+                Component.For<IEventStore>().ImplementedBy<MongoEventStore>().LifestyleSingleton()
+                );
+
 
             DependencyResolver.SetResolver(new WindsorDependencyResolver(container)); 
         }

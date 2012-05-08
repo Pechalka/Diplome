@@ -12,9 +12,10 @@ namespace Domain
 {
     public class Company : AggregateRoot
     {
-        public Company(Guid id, string name) : base(id)
+        public Company(Guid id, string name, string description)
+            : base(id)
         {
-            ApplyEvent(new CompanyAddedEvent{ CompanyId = id, Name = name});
+            ApplyEvent(new CompanyAddedEvent { CompanyId = id, Name = name, Description = description });
         }
 
         public Company(IEventInputStream events) : base(events)
@@ -35,18 +36,21 @@ namespace Domain
         public string Name { get; set; }
 
 
+        public void Update(string newName, string newDescription, string newAddress)
+        {
+            ApplyEvent(new CompanyUpdatedEvent{ Id = Id, Name = newName, Address = newAddress, Description = newDescription });
+        }
+
+        private void Apply(CompanyUpdatedEvent evt)
+        {
+            Description = evt.Description;
+            Address = evt.Address;
+            Name = evt.Name;
+        }
+
         private void Apply(CompanyAddedEvent evt)
         {
             Name = evt.Name;
         }
-
-        //public Company(string name, string description)
-        //{
-        //    //return new Company
-        //    //           {
-        //    //               Name = name, 
-        //    //               Description = description
-        //    //           };
-        //}
     }
 }

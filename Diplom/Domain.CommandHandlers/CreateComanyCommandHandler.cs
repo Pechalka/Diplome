@@ -1,4 +1,5 @@
 ﻿using Domain.Commands;
+using Infrastructure;
 using Infrastructure.CQRS;
 using Infrastructure.EventSourcing;
 
@@ -6,19 +7,19 @@ namespace Domain.CommandHandlers
 {
     public class CreateComanyCommandHandler : ICommandHandler<CreateComanyCommand>
     {
+        private readonly IRepository<Company> _companyRepository;
+        private readonly IPersistenceManager _persistenceManager;
+
+        public CreateComanyCommandHandler(IRepository<Company> companyRepository, IPersistenceManager persistenceManager)
+        {
+            _companyRepository = companyRepository;
+            _persistenceManager = persistenceManager;
+        }
+
         public void Handle(CreateComanyCommand command)
         {
-            //ICompanyRepository _companyRepository = new CompanyRepositoryMongo();
-            //_companyRepository.Save(new Company
-            //                                     {
-            //                                         Id = command.Id,
-            //                                         Category = command.Category,
-            //                                         Name = command.Name,
-            //                                         Description = command.Description
-            //                                     });
-
-            var rep = new EventSourcedRepository<Company>(new MongoEventStore());
-            rep.Add(new Company(command.Id, command.Name ));
+            _companyRepository.Add(new Company(command.Id, command.Name, command.Description));
+            _persistenceManager.Commit();
         }
     }
 }

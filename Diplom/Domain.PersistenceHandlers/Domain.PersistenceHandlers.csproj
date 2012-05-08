@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Driver, Version=1.3.1.4349, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,12 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompanyAddedEventHandler.cs" />
+    <Compile Include="CompanyUpdatedEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain.Events\Domain.Events.csproj">
       <Project>{80835D3C-E847-4EF1-88F0-D3723536B4DC}</Project>
       <Name>Domain.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.ViewModel\Domain.ViewModel.csproj">
+      <Project>{023342D6-E993-491C-B322-AA2BD2FE1014}</Project>
+      <Name>Domain.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{6378AEA9-BFAA-4F7A-BC99-FF2092BE2100}</Project>

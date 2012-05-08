@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Infrastructure.EventSourcing;
 
 namespace Infrastructure.CQRS
 {
-    public class QueryFor<TResult> where TResult : IAggregateRoot
+    public class QueryFor<TResult> 
     {
         private readonly ViewResult _view;
 
@@ -15,17 +14,13 @@ namespace Infrastructure.CQRS
             _view = view;
         }
 
-        //public TResult GetBy(Guid id)
-        //{
-        //    var collection = MongoHelper.GetCollectionOf<TResult>();
-        //    return collection.FindOneById(id);
-        //}
-
-        public TResult GetBy(Guid id) 
+        public TResult GetBy(Guid id)
         {
-            var rep = new EventSourcedRepository<TResult>(new MongoEventStore());
-            return rep.ById(id);
+            var collection = MongoHelper.GetCollectionOf<TResult>();
+            return collection.FindOneById(id);
         }
+
+
 
         public IList<TResult> GetPage(int page,int pageSize, out int totalPages)
         {

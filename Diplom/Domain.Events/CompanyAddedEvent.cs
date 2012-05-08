@@ -8,5 +8,6 @@ namespace Domain.Events
     {
         public Guid CompanyId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

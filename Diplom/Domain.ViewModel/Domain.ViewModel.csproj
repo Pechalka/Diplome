@@ -47,7 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompaniesListViewModel.cs" />
+    <Compile Include="CompanyDetailsViewModel.cs" />
     <Compile Include="CompanyNavigationViewModel.cs" />
+    <Compile Include="CompanyReviewsViewModel.cs" />
+    <Compile Include="CompanyReviewViewModel.cs" />
     <Compile Include="CompanyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\GetPageOfCompaniesQuery.cs" />

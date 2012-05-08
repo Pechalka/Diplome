@@ -13,7 +13,8 @@ namespace Diplom.Controllers
     {
         public ActionResult Details(Guid id)
         {
-            return View(For<Company>().GetBy(id));
+            var company = For<CompanyDetailsViewModel>().GetBy(id);
+            return View(company);
         }
 
         [HttpPost]
@@ -39,28 +40,20 @@ namespace Diplom.Controllers
 
         public ActionResult Reviews(Guid id)
         {
-            var company = For<Company>().GetBy(id);
-            return View(new CompanyViewModel
-            {
-                Name = company.Name,
-                Id = company.Id.ToString()
-            });
+            var company = For<CompanyViewModel>().GetBy(id);
+            return View(company);
         }
 
         public ActionResult Photos(Guid id)
         {
-            var company = For<Company>().GetBy(id);
-            return View(new CompanyViewModel
-                            {
-                                Name = company.Name,
-                                Id = company.Id.ToString()
-                            });
+            var company = For<CompanyViewModel>().GetBy(id);
+            return View(company);
         }
 
         [HttpGet]
         public ViewResult Change(Guid id)
         {
-            var company = For<Company>().GetBy(id);
+            var company = For<CompanyDetailsViewModel>().GetBy(id);
 
             var viewModel = new ChangeCompanyCommand
             {
@@ -84,39 +77,22 @@ namespace Diplom.Controllers
 
         public ActionResult List(string category = "", int page = 1)
         {
-            var q = new GetPageOfCompaniesQuery();
-            q.Category = category;
-            q.Page = page;
-            q.PageSize = 10;
-
-            return View(q.Execute());
-            //return
-            //    For<CompaniesListViewModel>()
-            //    .Execute<IGetPageOfCompaniesQuery>()
-            //    .WithParams(q =>
-            //    {
-            //        q.Category = category;
-            //        q.Page = page;
-            //        q.PageSize = 10;
-            //    });
+            return
+                For<CompaniesListViewModel>()
+                .Execute<IGetPageOfCompaniesQuery>()
+                .WithParams(q =>
+                {
+                    q.Category = category;
+                    q.Page = page;
+                    q.PageSize = 10;
+                });
         }
     }
 
 
-    public class CompanyReviewsViewModel
-    {
-        public Guid CompanyId { get; set; }
-        public string Name { get; set; }
-        public List<CompanyReviewViewModel> Reviews { get; set; }
-    }
 
-    public class CompanyReviewViewModel
-    {
-        public string AvatarUrl { get; set; }
-        public string Date { get; set; }
-        public string Text { get; set; }
-        public bool IsGood { get; set; }
-    }
+
+
 }
 
 

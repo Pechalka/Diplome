@@ -8,6 +8,6 @@ namespace Domain.ViewModel
         public string Category { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
-        public List<Company> Companies { get; set; }
+        public List<CompanyViewModel> Companies { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Domain.ViewModel.Queries
                 query = Query.EQ("Category", Category.ToUpper());
 
             int totalPages;
-            var companies = MongoHelper.GetCollectionOf<Company>().GetPage(query, Page, PageSize,
+            var companies = MongoHelper.GetCollectionOf<CompanyViewModel>().GetPage(query, Page, PageSize,
                                                         out totalPages);
 
 

@@ -11,25 +11,42 @@ namespace Infrastructure.EventSourcing
     public class EventSourcedRepository<T> : IRepository<T> where T : IAggregateRoot
     {
         private IEventStore eventStore;
+        private readonly IContext _context;
         private ConstructorInfo constructor;
 
-        public EventSourcedRepository(IEventStore eventStore)
+        public EventSourcedRepository(IEventStore eventStore, IContext context)
         {
             this.eventStore = eventStore;
+            _context = context;
             constructor = typeof(T).GetConstructor(new Type[] { typeof(IEventInputStream) });
         }
 
-        public T ById(Guid key)
-        {
-            var events = eventStore.LoadEventHistory(key);
+            public T ById(Guid key)
+            {
+                var events = eventStore.LoadEventHistory(key);
 
-            var resVal = (T)constructor.Invoke(new Object[] { events });
-            return resVal;
-        }
+                var resVal = (T)constructor.Invoke(new Object[] { events });
+                AddToContext(resVal);
+                return resVal;
+            }
 
-        public void Add(T toAdd)
-        {
-            eventStore.PersistUncommitedEvents(toAdd);
+            public void Add(T toAdd)
+            {
+                AddToContext(toAdd);
+            }
+
+            private void AddToContext(T toAdd)
+            {
+                HashSet<IAggregateRoot> aggregates = _context[MongoPersistenceManager.AGGREGATE_KEY] as HashSet<IAggregateRoot>;
+
+                if (aggregates == null)
+                {
+                    aggregates = new HashSet<IAggregateRoot>();
+                    _context[MongoPersistenceManager.AGGREGATE_KEY] = aggregates;
+                }
+
+                aggregates.Add(toAdd);
+            }
         }
 
     }
@@ -79,4 +96,4 @@ namespace Infrastructure.EventSourcing
     //        aggregates.Add(toAdd);
     //    }
     //}
-}
+//}

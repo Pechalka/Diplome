@@ -7,7 +7,7 @@ namespace Infrastructure.CQRS
 {
     public class CQRSController : Controller
     {
-        public QueryFor<TResult> For<TResult>() where TResult : IAggregateRoot
+        public QueryFor<TResult> For<TResult>() 
         {
             return new QueryFor<TResult>(View());
         }

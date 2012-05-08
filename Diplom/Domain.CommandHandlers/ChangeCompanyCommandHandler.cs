@@ -1,20 +1,27 @@
 ﻿using Domain.Commands;
+using Infrastructure;
 using Infrastructure.CQRS;
+using Infrastructure.EventSourcing;
 
 namespace Domain.CommandHandlers
 {
     public class ChangeCompanyCommandHandler : ICommandHandler<ChangeCompanyCommand>
     {
+        private readonly IRepository<Company> _companyRepository;
+        private readonly IPersistenceManager _persistenceManager;
+
+        public ChangeCompanyCommandHandler(IRepository<Company> companyRepository, IPersistenceManager persistenceManager)
+        {
+            _companyRepository = companyRepository;
+            _persistenceManager = persistenceManager;
+        }
+
         public void Handle(ChangeCompanyCommand command)
         {
-            ICompanyRepository _companyRepository = new CompanyRepositoryMongo();
-            var company = _companyRepository.GetBy(command.Id);
+            var company = _companyRepository.ById(command.Id);
+            company.Update(command.Name, command.Description, command.Address);
 
-            company.Address = command.Address;
-            company.Description = command.Description;
-            company.Name = command.Name;
-
-            _companyRepository.Save(company);
+            _persistenceManager.Commit();
         }
     }
 }
