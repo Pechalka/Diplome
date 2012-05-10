@@ -64,15 +64,8 @@ namespace Diplom.Controllers
         [HttpGet]
         public ViewResult Change(Guid id)
         {
-            var company = For<CompanyDetailsViewModel>().GetBy(id);
-
-            var viewModel = new ChangeCompanyCommand
-            {
-                Id = company.Id,
-                Name = company.Name,
-                Description = company.Description,
-                Address = company.Address
-            };
+            var viewModel = For<CompanyDetailsViewModel>().GetBy(id);
+            viewModel.Navigation.Selected = "1";
 
             return View(viewModel);
         }
@@ -97,6 +90,11 @@ namespace Diplom.Controllers
                     q.Page = page;
                     q.PageSize = 10;
                 });
+        }
+
+        public ActionResult Services()
+        {
+            return View();
         }
 
 

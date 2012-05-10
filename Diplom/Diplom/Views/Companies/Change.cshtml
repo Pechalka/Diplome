@@ -1,21 +1,48 @@
-﻿@model ChangeCompanyCommand
+﻿@model CompanyDetailsViewModel
 
 @{
-    ViewBag.Title = "Change";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Change</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.EditorFor(_ => _.Name)
-    @Html.EditorFor(_ => _.Address)
-    @Html.TextAreaFor(_ => _.Description)
-    @Html.HiddenFor(_ => _.Id)
-    
-    
-    <input type="submit" value="Сохранить"/>
-    @Html.ActionLink("Отмена", "Details", new { id = Model.Id }, null)
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                    <span class="divider">/</span>
+                    <li>
+                            <li class="active">@Model.Name</li>   
+                    </li>
+                </ul>
 }
 
+
+<div class="span4">
+    <a href="#" class="thumbnail">
+        <img src="http://placehold.it/360x268" alt="">
+        </a>
+
+</div>
+
+<div class="span5">
+    @using (Html.BeginForm()){
+        @Html.LabelFor(_=>_.Name, "Название")
+        @Html.TextBoxFor(_=>_.Name)
+        @Html.LabelFor(_=>_.Address, "Адрес")    
+        @Html.TextBoxFor(_=>_.Address)
+        @Html.LabelFor(_=>_.Description, "Описание")
+        @Html.TextAreaFor(_=>_.Description)
+
+        
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Сохранить"/>
+            @Html.ActionLink("Отмена", "Details", "Companies", new { id = Model.Id }, new { @class = "btn" })
+          </div>
+
+    }
+</div>
+
+<div class="span3">    
+    @Html.Partial("CompanyNavigation", Model.Navigation)
+</div>
