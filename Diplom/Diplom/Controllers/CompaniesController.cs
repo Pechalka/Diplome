@@ -92,9 +92,12 @@ namespace Diplom.Controllers
                 });
         }
 
-        public ActionResult Services()
+        public ActionResult Services(Guid id)
         {
-            return View();
+            var viewModel = For<CompanyDetailsViewModel>().GetBy(id);
+            viewModel.Navigation.Selected = "3";
+
+            return View(viewModel);
         }
 
 
@@ -106,7 +109,26 @@ namespace Diplom.Controllers
 
 
 
+    public class ServiceViewModel
+    {
+        public string Price { get; set; }
+        public bool HasPrice
+        {
+            get { return string.IsNullOrEmpty(Price); }
+        }
+        public string Decscription { get; set; }
+        public bool HasDecscription
+        {
+            get { return string.IsNullOrEmpty(Decscription); }
+        }
 
+
+        public string Title { get; set; }
+        
+        
+        public bool ReadyNow { get; set; }
+        
+    }
 
 }
 

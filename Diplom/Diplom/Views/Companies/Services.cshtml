@@ -1,0 +1,89 @@
+﻿@model CompanyDetailsViewModel
+
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                    <span class="divider">/</span>
+                    <li>
+                            <li class="active">@Model.Name</li>   
+                    </li>
+                </ul>
+}
+
+
+<div class="span4">
+    <a href="#" class="thumbnail">
+        <img src="http://placehold.it/360x268" alt="">
+        </a>
+            <div class="row">
+        <div class="span4">
+        <h2 class="p" data-content="перечислены услуги которы предостовляет компания <p><span class='label'>услуга сейчас не доступна</span></p> <p><a  class='btn btn-mini' >Услугу можно заказать нажав на кнопку</a></p>" data-original-title="Предоставляемые услуги">Предоставляемые услуги<i class="icon-question-sign"></i></h2>
+          @* <i class="icon-info-sign"></i>*@
+        @{
+        var r = new Random();
+            
+        }
+        @*@for (int i = 1; i <= 11; i ++ )
+        {
+            var size = r.Next(2, 11);
+            var title = "Услуга" + new string('o', size);
+            var text = "Описание услуги бла бла бла бла бла бла бла бла бла бла бла";
+            
+            if (size %2 == 0)
+            {
+                
+              if (i % 4 == 0)
+              {
+                <i class="icon-book"></i>  
+                <i class='icon-info-sign'></i>
+              }  <a href="#" class="btn btn-mini p" style="margin-right: 2px" rel="popover" data-content="@text" data-original-title="@title"> @title </a>
+            }
+            else
+            {
+                text += "<span class='label label-important'> услуга сейчас не доступна</span>";
+                <span class=" p label" rel="popover"  style="margin-right: 2px" data-content="@text" data-original-title="@title"> @title @if (i % 4 == 0)
+                                                                                                                                          {
+                <i class='icon-info-sign icon-white'></i>
+                                                                                                                                          }</span>
+            }
+        }*@
+        @for (int i = 1; i <= 11; i++)
+        {
+            @*<li><i class="icon-book"></i>  
+                <i class='icon-info-sign'></i> <a class="btn btn-mini">Услуга</a><a> Заказать</a></li>*@
+            <a class="btn btn-mini">Услуга</a>
+        }
+        <a class="btn btn-large">Заказать услугу</a>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="span5">
+        <h1>@Model.Name<small> @Model.Address</small></h1>
+        <p>@Model.Description</p>
+    @Html.ActionLink("редактировать", "Change", "Companies", new { id = Model.Id }, new { @class = "btn  btn-primary btn-mini" })
+</div>
+
+<div class="span3">    
+    @Html.Partial("CompanyNavigation", Model.Navigation)
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function() {
+            $(".p")
+                .popover();
+
+        });
+    });
+
+</script>

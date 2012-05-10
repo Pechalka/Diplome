@@ -127,6 +127,7 @@
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -211,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Companies\_AddReviewForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Companies\Services.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
