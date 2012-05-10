@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain.Commands\Domain.Commands.csproj">
+      <Project>{0EF90729-1B96-4836-A829-D03163A2A906}</Project>
+      <Name>Domain.Commands</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain.Events\Domain.Events.csproj">
       <Project>{80835D3C-E847-4EF1-88F0-D3723536B4DC}</Project>
       <Name>Domain.Events</Name>

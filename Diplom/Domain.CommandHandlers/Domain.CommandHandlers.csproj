@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddReviewToCompanyCommandHandler.cs" />
     <Compile Include="ChangeCompanyCommandHandler.cs" />
     <Compile Include="CreateComanyCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

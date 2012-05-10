@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompantReviewAddedEvent.cs" />
     <Compile Include="CompanyAddedEvent.cs" />
     <Compile Include="CompanyUpdatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

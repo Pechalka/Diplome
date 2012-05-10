@@ -1,4 +1,5 @@
-﻿using Domain.Events;
+﻿using System.Collections.Generic;
+using Domain.Events;
 using Domain.ViewModel;
 using Infrastructure;
 using Infrastructure.EventSourcing;
@@ -23,9 +24,26 @@ namespace Domain.PersistenceHandlers
                                     Id = @event.CompanyId,
                                     Name = @event.Name,
                                     Description = @event.Description,
-                                    Address = ""
+                                    Address = "",
+                                    Navigation = new CompanyStatisticViewModel
+                                                     {
+                                                         CompanyId = @event.CompanyId,
+                                                         ReviewCount = 0
+                                                     }
                                 });
-            
+
+            var reviewDetails = MongoHelper.GetCollectionOf<CompanyReviewsViewModel>();
+            reviewDetails.Save(new CompanyReviewsViewModel
+            {
+                Id = @event.CompanyId,
+                Name = @event.Name,
+                Reviews = new List<CompanyReviewViewModel>(),
+                Navigation = new CompanyStatisticViewModel
+                {
+                    CompanyId = @event.CompanyId,
+                    ReviewCount = 0
+                }
+            });
         }
     }
 }

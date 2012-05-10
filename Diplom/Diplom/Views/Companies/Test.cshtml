@@ -1,134 +1,58 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <link href="@Url.Content("~/Content/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/bootstrap/css/bootstrap-responsive.min.css")" rel="stylesheet" type="text/css" />
-    <title>Test</title>
-</head>
-<body>
-@* <div class="container">
-    <div class="row">
-        <div class="span9">
-            
-        </div>
-        <div class="span3">asdf</div>
-    </div>
- </div>*@
-@*
-  <div class="navbar navbar-fixed-top">*@
-    
-@*    <div class="navbar-inner">
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                <li>
+                    <span class="divider">/</span>
+                   @* @Html.ActionLink(Model.Name, "Details", "Companies", new { id = Model.Id }, null)  *@
+                </li>
+                <li>
+                    <span class="divider">/</span>
+                    Отзывы 
+                </li>
+    </ul>
+}
+<div class="span12">
+    <div class="row" >
       
-        <a class="brand" href="">***</a>
-        <ul class="nav">
-          <li><a href="{Ссылка}">rss</a></li>
-          <li><a href="{Ссылка}">chrome extension</a></li>
-        </ul>
-        <ul class="nav pull-right">
-          <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ваш уникальный код читателя <strong>{Код}</strong><b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a data-toggle="modal" href="#email">Отправить на e-mail</a></li>
-            <li><a data-toggle="modal" href="#new_uid">Ввести другой код</a></li>
-          </ul>
-          </li>
-        </ul>
-      </div>*@
-    <div class="container">
-    <div class="row">
-    <div class="span9">
-     <form class="well form-inline" method="post">
-      <input type="text" class="span7" placeholder="Ссылка на новость">
-      <button type="submit" class="btn">Добавить</button>
-    </form>
+          <div class="span4">
+        <a href="#" class="thumbnail">
+        <img src="http://placehold.it/360x268" alt="">
+        </a>
     </div>
+
+      <div class="span6 ">
+        <textarea  id="textarea" class="input-xxlarge" rows="5"></textarea>
+        <div class="row">
+          <div class="span4">
+                              <label class="radio">
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
+                        <span class="label label-success">Хорошо</span>
+                    </label>
+                    <label class="radio" >
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
+                        <span class="label label-important">Плохо</span>
+                    </label>
+          </div>
+          <div class="span2"><input type="submit" class="btn btn-large" value="Добавить отзыв" /></div>
+        </div>
+    
+
     </div>
-    <hr/>
-    <div></div>
+    <div class="span2">    
+    
+    <ul class="nav nav-list well">
+        <li class="active"><a href="/Companies/Details/1eaaaa33-e58f-40bc-a179-933077c4c5ee"><i class="icon-home"></i>Главная</a></li>
+        <li><a href="/Companies/Reviews/1eaaaa33-e58f-40bc-a179-933077c4c5ee"><i class="icon-comment"></i> Отзывы (215)</a></li>
+        <li><a href="#lB"><i class="icon-wrench"></i> Услуги (4)</a></li>
+        <li><a href="/Companies/Photos/1eaaaa33-e58f-40bc-a179-933077c4c5ee"><i class="icon-camera"></i> Фотографии</a></li>
+        <li><a href="#lC"><i class="icon-user"></i> Вакансии (2)</a></li>
+    </ul>
+</div>
     </div>
- @* </div>*@
-@*<header class="row-fluid bg-top">
-   	<div class="navbar">
-<div class="navbar-inner">
-   	<div class="container">
-           	<ul class="nav">
-<li class="active"><a href="http://uspeh.cc/" title="Главная">Главная</a></li>
-<li><a href="#" title="Новости">О сайте</a></li>
-<li><a href="#" title="Услуги">Контакты</a></li>
-<li><a href="#" title="Каталог">Карта сайта</a></li>
-</ul>
-       </div>
-   </div>
 </div>
-<div class="container">
-<h1>Мой блог</h1>
-<p>Мой первый блог на ModX</p>
-</div>
-   	</header>
-<div class="container">
-<div class="row">
-<div class="span9">
-<ul class="thumbnails">
- 	 <li class="span8 well">
-   	 <div class="thumbnail">
-     	 <h2><a href="#">Пост номер 1</a></h2>
-     	 <img src="http://placehold.it/620x230" alt="">
-
-     	 <p>Описание...</p>
-        <a href="#" class="btn btn-primary">Читать далее</a>
-   	 </div>
- 	 </li>
-
-
-</ul>
-<div class="pagination">
- <ul>
-   <li class="active">
-     <a href="#">1</a>
-   </li>
-   <li><a href="#">2</a></li>
-   <li><a href="#">3</a></li>
-   <li><a href="#">4</a></li>
- </ul>
-</div>
-
-</div>
-<div class="span3">
-<div class="row">
-<h3>Категории</h3>
-<ul class="nav nav-pills nav-stacked">
-<li class="active"><a href="#">Категория 1</a></li>
-<li><a href="#">Категория 2</a></li>
-<li><a href="#">Категория 3</a></li>
-<li><a href="#">Категория 4</a></li>
-<li><a href="#">Категория 5</a></li>
-</ul>
-</div>
-</div>	
-</div
-</div>
-<footer class="container">
- <div class="row">
-<div class="span12 well">	
-<div class="span4">
-<p>© Блог 2012. Все права защищены</p>
-</div>
-<div class="span5 offset7">
-   <ul class="nav nav-pills">
-   	<li><a href="#">Главная</a></li>
-<li><a href="#">Контакты</a></li>
-       <li><a href="#">Карта сайта</a></li>
-       <li><a href="insex.html/#home">Наверх</a></li>
-   </ul>
-</div>
- </div></div>
-
-</footer>*@
-
-</body>
-</html>

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddReviewToCompanyCommand.cs" />
     <Compile Include="ChangeCompanyCommand.cs" />
     <Compile Include="CreateComanyCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

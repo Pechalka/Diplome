@@ -1,4 +1,4 @@
-﻿@model CompanyViewModel
+﻿@model CompanyReviewsViewModel
 @{
     ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,7 +19,9 @@
     </ul>
 }
 <div class="span9">
-    @for (int n = 1; n <= 4; n++)
+
+
+    @foreach (var review in Model.Reviews)
     {
                 <div class="row">
                     <div class="span2 ">
@@ -31,19 +33,22 @@
                     <div class="span7">
                        
                         <h3>
-                        @if (n % 3 == 0)
-                        {
-                            <span class="label label-important">плохо</span>
-                        }else
+                        @if (review.IsGood)
                         {
                             <span class="label label-success">хорошо</span>
                         }
-                        <small> @DateTime.Now.ToString("dd.MM.yyyy")</small></h3>
-                        <p>вапорвапопао ваповопр оапропаро аооапаокпр ароапорапопра апор апоопароапро </p>
+                        else
+                        {
+                            <span class="label label-important">плохо</span>
+                        }
+                        <small> @review.Date</small></h3>
+                        <p>@review.Text</p>
                     </div>
                 </div>
     }
+
+    @Html.Partial("_AddReviewForm", new AddReviewToCompanyCommand { CompanyId = Model.Id })
 </div>
 <div class="span3">    
-    @Html.Partial("CompanyNavigation", new CompanyNavigationViewModel { CompanyId = Model.Id, Selected = "2" })
+    @Html.Partial("CompanyNavigation", Model.Navigation)
 </div>

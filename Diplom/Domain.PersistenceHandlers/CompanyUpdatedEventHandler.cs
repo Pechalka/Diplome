@@ -2,6 +2,7 @@
 using Domain.ViewModel;
 using Infrastructure;
 using Infrastructure.EventSourcing;
+using MongoDB.Driver.Builders;
 
 namespace Domain.PersistenceHandlers
 {
@@ -17,14 +18,12 @@ namespace Domain.PersistenceHandlers
                 Description = evt.Description
             });
 
-            var companyDetails = MongoHelper.GetCollectionOf<CompanyDetailsViewModel>();
-            companyDetails.Save(new CompanyDetailsViewModel
-            {
-                Id = evt.Id,
-                Name = evt.Name,
-                Description = evt.Description,
-                Address = evt.Address
-            });
+            var update = Update.Set("Name", evt.Name).Set("Description", evt.Description).Set("Address", evt.Address);
+
+            MongoHelper.GetCollectionOf<CompanyDetailsViewModel>()
+                .Update(Query.EQ("_id", evt.Id), update);
+
+
         }
     }
 }

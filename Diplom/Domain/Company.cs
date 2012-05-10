@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
+using Domain.Commands;
 using Domain.Events;
 using Infrastructure.EventSourcing;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain
 {
@@ -51,6 +46,21 @@ namespace Domain
         private void Apply(CompanyAddedEvent evt)
         {
             Name = evt.Name;
+        }
+
+        public void AddReview(AddReviewToCompanyCommand command)
+        {
+            ApplyEvent(new CompantReviewAddedEvent
+                           {
+                               CompanyId = Id, 
+                               Date = DateTime.Now, 
+                               IsGood = command.Type == AddReviewToCompanyCommand.ReviewType.Good, 
+                               Text = command.Text
+                           });
+        }
+
+        private void Apply(CompantReviewAddedEvent evt)
+        {
         }
     }
 }

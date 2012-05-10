@@ -51,7 +51,7 @@
  
     @Html.PageLinks(Model.CurrentPage, Model.TotalPages, page => Url.Action("List", "Companies", new { Model.Category, page }));
 </div>
-<div class="span3">    
+<div class="span3" >    
     <ul class="nav nav-list well">
         <li class="nav-header">Категории</li>
         <li @(Model.Category == "" ? "class=active" : "")>@Html.ActionLink("Все", "List", "Companies")</li>
@@ -62,5 +62,6 @@
         <li @(Model.Category == "ОБРАЗОВАНИЕ, КУРСЫ" ? "class=active" : "")>@Html.ActionLink("ОБРАЗОВАНИЕ, КУРСЫ", "List", "Companies", new { category = "ОБРАЗОВАНИЕ, КУРСЫ" }, null)</li>
         <li @(Model.Category == "МЕБЕЛЬ И ИНТЕРЬЕР" ? "class=active" : "")>@Html.ActionLink("МЕБЕЛЬ И ИНТЕРЬЕР", "List", "Companies", new { category = "МЕБЕЛЬ И ИНТЕРЬЕР" }, null)</li>
     </ul>
+    @Html.ActionLink("Создать компанию", "Create", null, new { @class = "btn btn-large", style = "margin: 10px" })
 </div>
 

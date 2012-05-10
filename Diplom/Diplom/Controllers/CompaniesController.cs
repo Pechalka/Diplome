@@ -13,8 +13,9 @@ namespace Diplom.Controllers
     {
         public ActionResult Details(Guid id)
         {
-            var company = For<CompanyDetailsViewModel>().GetBy(id);
-            return View(company);
+            var form = For<CompanyDetailsViewModel>().GetBy(id);
+            form.Navigation.Selected = "1";
+            return View(form);
         }
 
         [HttpPost]
@@ -37,12 +38,22 @@ namespace Diplom.Controllers
 
 
 
-
+        [HttpGet]
         public ActionResult Reviews(Guid id)
         {
-            var company = For<CompanyViewModel>().GetBy(id);
-            return View(company);
+            var form = For<CompanyReviewsViewModel>().GetBy(id);
+            form.Navigation.Selected = "2";
+            return View(form);
         }
+
+        [HttpPost]
+        public ActionResult Reviews(AddReviewToCompanyCommand form)
+        {
+            var redirect = RedirectToAction("Reviews", new {id = form.CompanyId});
+
+            return Handle(form, redirect, redirect);
+        }
+
 
         public ActionResult Photos(Guid id)
         {
@@ -86,6 +97,12 @@ namespace Diplom.Controllers
                     q.Page = page;
                     q.PageSize = 10;
                 });
+        }
+
+
+        public ActionResult Test()
+        {
+            return View();
         }
     }
 
