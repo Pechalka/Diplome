@@ -43,6 +43,12 @@
     <Reference Include="MongoDB.Driver">
       <HintPath>..\packages\mongocsharpdriver.1.3.1\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleCqrs">
+      <HintPath>..\..\lib\SimpleCqrs\SimpleCqrs.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleCqrs.EventStore.MongoDb">
+      <HintPath>..\..\lib\SimpleCqrs\SimpleCqrs.EventStore.MongoDb.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -55,27 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CQRS\CQRSController.cs" />
-    <Compile Include="CQRS\ICommand.cs" />
     <Compile Include="CQRS\ICommandHandler.cs" />
     <Compile Include="CQRS\IQuery.cs" />
     <Compile Include="CQRS\QueryExecuter.cs" />
     <Compile Include="CQRS\QueryFor.cs" />
-    <Compile Include="EventSourcing\AggregateRoot.cs" />
-    <Compile Include="EventSourcing\ContainerEventBus.cs" />
-    <Compile Include="EventSourcing\EventSourcedRepository.cs" />
-    <Compile Include="EventSourcing\IAggregateRoot.cs" />
-    <Compile Include="EventSourcing\IContext.cs" />
-    <Compile Include="EventSourcing\IEvent.cs" />
-    <Compile Include="EventSourcing\IEventBus.cs" />
-    <Compile Include="EventSourcing\IEventStore.cs" />
-    <Compile Include="EventSourcing\IHandleEvent.cs" />
-    <Compile Include="EventSourcing\IPersistenceManager.cs" />
-    <Compile Include="EventSourcing\MongoEventStore.cs" />
-    <Compile Include="EventSourcing\MongoPersistenceManager.cs" />
-    <Compile Include="EventSourcing\SqlServerEventStore.cs" />
-    <Compile Include="EventSourcing\WebContext.cs" />
-    <Compile Include="IoC\WindsorDependencyResolver.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="MongoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\TypeExtensions.cs" />

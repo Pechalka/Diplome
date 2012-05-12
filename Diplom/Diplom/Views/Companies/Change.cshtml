@@ -33,7 +33,7 @@
         @Html.TextBoxFor(_=>_.Address)
         @Html.LabelFor(_=>_.Description, "Описание")
         @Html.TextAreaFor(_=>_.Description)
-
+        @Html.Hidden("CompanyId", Model.Id)
         
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" value="Сохранить"/>

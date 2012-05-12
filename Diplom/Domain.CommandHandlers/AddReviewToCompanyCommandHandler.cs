@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Domain.Commands;
-using Infrastructure;
-using Infrastructure.CQRS;
-using Infrastructure.EventSourcing;
+﻿using Domain.Commands;
+using SimpleCqrs.Commanding;
+using SimpleCqrs.Domain;
 
 namespace Domain.CommandHandlers
 {
-    public class AddReviewToCompanyCommandHandler : ICommandHandler<AddReviewToCompanyCommand>
+    public class AddReviewToCompanyCommandHandler : CommandHandler<AddReviewToCompanyCommand>
     {
-        private readonly IRepository<Company> _companyRepository;
-        private readonly IPersistenceManager _persistenceManager;
+        private readonly IDomainRepository _repository;
 
-        public AddReviewToCompanyCommandHandler(IRepository<Company> companyRepository, IPersistenceManager persistenceManager)
+        public AddReviewToCompanyCommandHandler(IDomainRepository repository)
         {
-            _companyRepository = companyRepository;
-            _persistenceManager = persistenceManager;
+            _repository = repository;
         }
 
-        public void Handle(AddReviewToCompanyCommand command)
+
+        public override void Handle(AddReviewToCompanyCommand command)
         {
-            var company = _companyRepository.ById(command.CompanyId);
+            var company = _repository.GetById<Company>(command.CompanyId);
             company.AddReview(command);
 
-            _persistenceManager.Commit(); 
+            _repository.Save(company);
         }
     }
 }

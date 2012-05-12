@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
-using Infrastructure.EventSourcing;
 using MongoDB.Bson;
+using SimpleCqrs.Commanding;
 
 namespace Infrastructure.CQRS
 {
@@ -21,7 +21,7 @@ namespace Infrastructure.CQRS
             {
                 try
                 {
-                    DependencyResolver.Current.GetService<ICommandHandler<TCommand>>().Handle(command);
+                    DependencyResolver.Current.GetService<ICommandBus>().Send(command);
                     return success;
                 }
                 catch (Exception e)

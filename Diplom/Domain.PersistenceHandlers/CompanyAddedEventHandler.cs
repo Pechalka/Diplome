@@ -2,18 +2,18 @@
 using Domain.Events;
 using Domain.ViewModel;
 using Infrastructure;
-using Infrastructure.EventSourcing;
+using SimpleCqrs.Eventing;
 
 namespace Domain.PersistenceHandlers
 {
-    public class CompanyAddedEventHandler : IHandleEvent<CompanyAddedEvent>
+    public class CompanyAddedEventHandler : IHandleDomainEvents<CompanyAddedEvent>
     {
         public void Handle(CompanyAddedEvent @event)
         {
             var companyItems = MongoHelper.GetCollectionOf<CompanyViewModel>();
             companyItems.Save(new CompanyViewModel
                                 {
-                                    Id = @event.CompanyId,
+                                    Id = @event.AggregateRootId,
                                     Name = @event.Name,
                                     Description = @event.Description
                                 });
@@ -21,7 +21,7 @@ namespace Domain.PersistenceHandlers
             var companyDetails = MongoHelper.GetCollectionOf<CompanyDetailsViewModel>();
             companyDetails.Save(new CompanyDetailsViewModel
                                 {
-                                    Id = @event.CompanyId,
+                                    Id = @event.AggregateRootId,
                                     Name = @event.Name,
                                     Description = @event.Description,
                                     Address = "",
@@ -35,7 +35,7 @@ namespace Domain.PersistenceHandlers
             var reviewDetails = MongoHelper.GetCollectionOf<CompanyReviewsViewModel>();
             reviewDetails.Save(new CompanyReviewsViewModel
             {
-                Id = @event.CompanyId,
+                Id = @event.AggregateRootId,
                 Name = @event.Name,
                 Reviews = new List<CompanyReviewViewModel>(),
                 Navigation = new CompanyStatisticViewModel

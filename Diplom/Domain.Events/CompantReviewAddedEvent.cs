@@ -1,12 +1,11 @@
 ﻿using System;
-using Infrastructure.EventSourcing;
+using SimpleCqrs.Eventing;
 
 namespace Domain.Events
 {
-    [Serializable]
-    public class CompantReviewAddedEvent : IEvent
+
+    public class CompantReviewAddedEvent : DomainEvent
     {
-        public Guid CompanyId { get; set; }
         public bool IsGood { get; set; }
         public string Text { get; set; }
         public DateTime Date { get; set; }

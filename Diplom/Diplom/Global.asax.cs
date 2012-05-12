@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using SimpleCqrs;
 
 namespace Diplom
 {
@@ -30,9 +31,17 @@ namespace Diplom
             );
 
 
-            Configuration.Configure();
+          //  Configuration.Configure();
+            Runtime = new SimpleCqrsRuntime<WindsorServiceLocator>();
+            Runtime.Start();
 
+
+            DependencyResolver.SetResolver(Runtime.ServiceLocator); 
         }
+
+
+
+        private static SimpleCqrsRuntime<WindsorServiceLocator> Runtime;
 
         protected void Application_Start()
         {
@@ -40,6 +49,11 @@ namespace Diplom
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Application_End()
+        {
+            Runtime.Shutdown();
         }
     }
 }

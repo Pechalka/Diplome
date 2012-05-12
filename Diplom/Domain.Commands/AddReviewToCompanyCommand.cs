@@ -1,9 +1,9 @@
 ﻿using System;
-using Infrastructure.CQRS;
+using SimpleCqrs.Commanding;
 
 namespace Domain.Commands
 {
-    public class AddReviewToCompanyCommand : ICommand
+    public class AddReviewToCompanyCommand :  ICommand
     {
         public enum ReviewType
         {
@@ -11,8 +11,8 @@ namespace Domain.Commands
             Good,
             Bad
         }
-        public Guid CompanyId { get; set; }
         public ReviewType Type { get; set; }
         public string Text { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

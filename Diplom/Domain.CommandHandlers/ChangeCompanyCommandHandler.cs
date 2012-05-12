@@ -1,27 +1,24 @@
 ﻿using Domain.Commands;
-using Infrastructure;
-using Infrastructure.CQRS;
-using Infrastructure.EventSourcing;
+using SimpleCqrs.Commanding;
+using SimpleCqrs.Domain;
 
 namespace Domain.CommandHandlers
 {
-    public class ChangeCompanyCommandHandler : ICommandHandler<ChangeCompanyCommand>
+    public class ChangeCompanyCommandHandler : CommandHandler<ChangeCompanyCommand>
     {
-        private readonly IRepository<Company> _companyRepository;
-        private readonly IPersistenceManager _persistenceManager;
+        private readonly IDomainRepository _repository;
 
-        public ChangeCompanyCommandHandler(IRepository<Company> companyRepository, IPersistenceManager persistenceManager)
+        public ChangeCompanyCommandHandler(IDomainRepository repository)
         {
-            _companyRepository = companyRepository;
-            _persistenceManager = persistenceManager;
+            _repository = repository;
         }
 
-        public void Handle(ChangeCompanyCommand command)
+        public override void Handle(ChangeCompanyCommand command)
         {
-            var company = _companyRepository.ById(command.Id);
+            var company = _repository.GetById<Company>(command.CompanyId);
             company.Update(command.Name, command.Description, command.Address);
 
-            _persistenceManager.Commit();
+            _repository.Save(company);
         }
     }
 }

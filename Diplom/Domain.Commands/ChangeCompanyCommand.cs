@@ -1,5 +1,5 @@
 ﻿using System;
-using Infrastructure.CQRS;
+using SimpleCqrs.Commanding;
 
 namespace Domain.Commands
 {
@@ -11,6 +11,6 @@ namespace Domain.Commands
 
         public string Address { get; set; }
 
-        public Guid Id { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
-using Infrastructure.EventSourcing;
+using SimpleCqrs.Eventing;
 
 namespace Domain.Events
 {
-    [Serializable]
-    public class CompanyAddedEvent : IEvent
+    public class CompanyAddedEvent : DomainEvent
     {
         public Guid CompanyId { get; set; }
         public string Name { get; set; }

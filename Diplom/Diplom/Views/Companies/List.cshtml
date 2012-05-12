@@ -36,14 +36,14 @@
             {
                 <div class="row">
                     <div class="span2">
-                        <a href="@Url.Action("Details", "Companies", new {id = item.Id})" class="thumbnail">
+                        <a href="@Url.Action("Details", "Companies", new { id = item.Id })" class="thumbnail">
                             <img src="http://placehold.it/160x120" alt="">
                         </a>
                     </div>
                     <div class="span7">
                         <h3>@item.Name</h3>
                         <p>@item.Description</p>
-                        @Html.ActionLink("Подробней", "Details", "Companies", new {id = item.Id}, new {style = "float: right;", @class = "btn"})
+                        @Html.ActionLink("Подробней", "Details", "Companies", new { id = item.Id }, new { style = "float: right;", @class = "btn" })
                     </div>
                 </div>
             }

@@ -21,10 +21,10 @@ namespace Diplom.Controllers
         [HttpPost]
         public ActionResult Create(CreateComanyCommand form)
         {
-            form.Id = Guid.NewGuid();
+            form.CompanyId = Guid.NewGuid();
 
             return Handle(form,
-                RedirectToAction("Details", new { form.Id }), 
+                RedirectToAction("Details", new { id = form.CompanyId }), 
                 RedirectToAction("Create"));
         }
 
@@ -74,7 +74,7 @@ namespace Diplom.Controllers
         public ActionResult Change(ChangeCompanyCommand form)
         {
             return Handle(form,
-                          RedirectToAction("Details", new { form.Id }),
+                          RedirectToAction("Details", new { id = form.CompanyId }),
                           RedirectToAction("Change"));
         }
 

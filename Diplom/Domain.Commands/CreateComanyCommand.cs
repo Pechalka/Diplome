@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using Infrastructure.CQRS;
+using SimpleCqrs.Commanding;
 
 namespace Domain.Commands
 {
     public class CreateComanyCommand : ICommand
     {
-        public Guid Id { get; set; }
+        public Guid CompanyId { get; set; }
 
         [Required]
         // [Display("Название компании")]

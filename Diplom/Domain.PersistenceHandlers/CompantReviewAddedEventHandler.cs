@@ -1,17 +1,17 @@
 ﻿using Domain.Events;
 using Domain.ViewModel;
 using Infrastructure;
-using Infrastructure.EventSourcing;
 using MongoDB.Driver.Builders;
+using SimpleCqrs.Eventing;
 
 namespace Domain.PersistenceHandlers
 {
-    public class CompantReviewAddedEventHandler : IHandleEvent<CompantReviewAddedEvent>
+    public class CompantReviewAddedEventHandler : IHandleDomainEvents<CompantReviewAddedEvent>
     {
         public void Handle(CompantReviewAddedEvent evt)
         {
             var views = MongoHelper.GetCollectionOf<CompanyReviewsViewModel>();
-            var companyView = views.FindOneById(evt.CompanyId);
+            var companyView = views.FindOneById(evt.AggregateRootId);
 
             companyView.Reviews.Add(new CompanyReviewViewModel
                                         {
@@ -25,7 +25,7 @@ namespace Domain.PersistenceHandlers
             views.Save(companyView);
 
 
-            MongoHelper.GetCollectionOf<CompanyDetailsViewModel>().Update(Query.EQ("_id", evt.CompanyId),
+            MongoHelper.GetCollectionOf<CompanyDetailsViewModel>().Update(Query.EQ("_id", evt.AggregateRootId),
                                                                           Update.Set("Navigation.ReviewCount",
                                                                                      companyView.Navigation.ReviewCount));
         }
