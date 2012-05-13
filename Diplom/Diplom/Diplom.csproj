@@ -55,6 +55,9 @@
     <Reference Include="SimpleCqrs.EventStore.MongoDb">
       <HintPath>..\..\lib\SimpleCqrs\SimpleCqrs.EventStore.MongoDb.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleCqrs.Utilites">
+      <HintPath>..\..\lib\SimpleCqrs\SimpleCqrs.Utilites.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />

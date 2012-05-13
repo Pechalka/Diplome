@@ -17,7 +17,7 @@ namespace Domain.PersistenceHandlers
                                         {
                                             IsGood = evt.IsGood, 
                                             Text = evt.Text, 
-                                            Date = evt.Date.ToString(), 
+                                            Date = evt.Date.ToString("dd.MM.yyyy"), 
                                             AvatarUrl = "http://placehold.it/160x120"
                                         });
             companyView.Navigation.ReviewCount++;

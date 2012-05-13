@@ -1,6 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
+using Domain;
+using Domain.PersistenceHandlers;
+using Domain.ViewModel;
+using Infrastructure;
 using SimpleCqrs;
+using SimpleCqrs.Utilites;
 
 namespace Diplom
 {
@@ -35,10 +41,25 @@ namespace Diplom
             Runtime = new SimpleCqrsRuntime<WindsorServiceLocator>();
             Runtime.Start();
 
+            DependencyResolver.SetResolver(Runtime.ServiceLocator);
 
-            DependencyResolver.SetResolver(Runtime.ServiceLocator); 
+            ReCreateReadModels();
         }
 
+
+        private static void ReCreateReadModels()
+        {
+            MongoHelper.GetCollectionOf<CompanyViewModel>().RemoveAll();
+            MongoHelper.GetCollectionOf<CompanyReviewsViewModel>().RemoveAll();
+            MongoHelper.GetCollectionOf<CompanyDetailsViewModel>().RemoveAll();
+
+
+            var eventPlayer = new DomainEventReplayer(Runtime);
+            
+            eventPlayer.ReplayEventsForHandlerType(typeof(CompanyAddedEventHandler));
+            eventPlayer.ReplayEventsForHandlerType(typeof(CompanyUpdatedEventHandler));
+            eventPlayer.ReplayEventsForHandlerType(typeof(CompantReviewAddedEventHandler));
+        }
 
 
         private static SimpleCqrsRuntime<WindsorServiceLocator> Runtime;
