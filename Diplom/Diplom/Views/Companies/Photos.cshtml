@@ -1,6 +1,6 @@
-﻿@model CompanyViewModel
+﻿@*@model CompanyViewModel*@
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = "sdf";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,7 +11,7 @@
                 </li>
                 <li>
                     <span class="divider">/</span>
-                    @Html.ActionLink(Model.Name, "Details", "Companies", new { id = Model.Id }, null)  
+                    @Html.ActionLink("sdfg", "Details", "Companies", new { id = Guid.NewGuid() }, null)  
                 </li>
                 <li>
                     <span class="divider">/</span>
@@ -32,5 +32,5 @@
     </div>
 </div>
 <div class="span3">    
-    @Html.Partial("CompanyNavigation", new CompanyStatisticViewModel { CompanyId = Model.Id, Selected = "4" })
+    @Html.Partial("CompanyNavigation", new CompanyStatisticViewModel { CompanyId = Guid.NewGuid(), Selected = "4" })
 </div>

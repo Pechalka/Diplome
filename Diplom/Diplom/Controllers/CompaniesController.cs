@@ -55,10 +55,11 @@ namespace Diplom.Controllers
         }
 
 
-        public ActionResult Photos(Guid id)
+        public ActionResult Photos()
         {
-            var company = For<CompanyViewModel>().GetBy(id);
-            return View(company);
+          //  var company = For<CompanyViewModel>().GetBy(id);
+           // return View(company);
+            return View();
         }
 
         [HttpGet]

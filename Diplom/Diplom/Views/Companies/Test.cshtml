@@ -20,39 +20,47 @@
 <div class="span12">
     <div class="row" >
       
-          <div class="span4">
+<div class="span4">
+        <div class="row">
+    <div class="span4">
         <a href="#" class="thumbnail">
         <img src="http://placehold.it/360x268" alt="">
-        </a>
+        </a>    
     </div>
-
-      <div class="span6 ">
-        <textarea  id="textarea" class="input-xxlarge" rows="5"></textarea>
-        <div class="row">
-          <div class="span4">
-                              <label class="radio">
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
-                        <span class="label label-success">Хорошо</span>
-                    </label>
-                    <label class="radio" >
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
-                        <span class="label label-important">Плохо</span>
-                    </label>
-          </div>
-          <div class="span2"><input type="submit" class="btn btn-large" value="Добавить отзыв" /></div>
-        </div>
-    
-
-    </div>
-    <div class="span2">    
-    
-    <ul class="nav nav-list well">
-        <li class="active"><a href="/Companies/Details/1eaaaa33-e58f-40bc-a179-933077c4c5ee"><i class="icon-home"></i>Главная</a></li>
-        <li><a href="/Companies/Reviews/1eaaaa33-e58f-40bc-a179-933077c4c5ee"><i class="icon-comment"></i> Отзывы (215)</a></li>
-        <li><a href="#lB"><i class="icon-wrench"></i> Услуги (4)</a></li>
-        <li><a href="/Companies/Photos/1eaaaa33-e58f-40bc-a179-933077c4c5ee"><i class="icon-camera"></i> Фотографии</a></li>
-        <li><a href="#lC"><i class="icon-user"></i> Вакансии (2)</a></li>
-    </ul>
 </div>
+        <div class="row">
+        <div class="btn-group span2 " style="margin-top: 10px;">
+          <a class="btn btn-large" href="@Url.Action("Photos")">@*<i class="icon-camera"></i>*@ Фотографии</a>
+          <a class="btn btn-dropdown-toggle btn-large" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Альбом1</a></li>
+            <li><a href="#">Альбом2</a></li>
+            <li><a href="#">Альбом3</a></li>
+          </ul>
+        </div>
+
+        <div class="btn-group span2" style="margin-top: 10px; ">
+          <a class="btn btn-large" href="@Url.Action("Photos")">@*<i class="icon-camera"></i>*@ Отзывы</a>
+          <a class="btn btn-dropdown-toggle btn-large" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Плохие</a></li>
+            <li><a href="#">Хорошие</a></li>
+          </ul>
+        </div>
+        </div>
+        <div class="row">
+                <a class="btn btn-large span4">Заказать услугу</a>
+        </div>
+        <div class="row">
+                <a class="btn btn-large span4" style="display: block;">Показать на карте</a>
+             
+        </div>
+
+    </div>
+    <div class="span6">
+
+    @Html.Partial("_CompanyInfo")
+
+    </div>
     </div>
 </div>

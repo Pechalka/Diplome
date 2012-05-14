@@ -23,48 +23,29 @@
         <img src="http://placehold.it/360x268" alt="">
         </a>
             <div class="row">
-        <div class="span4">
+@*        <div class="span4">
         <h2 class="p" data-content="перечислены услуги которы предостовляет компания <p><span class='label'>услуга сейчас не доступна</span></p> <p><a  class='btn btn-mini' >Услугу можно заказать нажав на кнопку</a></p>" data-original-title="Предоставляемые услуги">Предоставляемые услуги<i class="icon-question-sign"></i></h2>
-          @* <i class="icon-info-sign"></i>*@
-        @{
-        var r = new Random();
-            
-        }
-        @*@for (int i = 1; i <= 11; i ++ )
-        {
-            var size = r.Next(2, 11);
-            var title = "Услуга" + new string('o', size);
-            var text = "Описание услуги бла бла бла бла бла бла бла бла бла бла бла";
-            
-            if (size %2 == 0)
-            {
-                
-              if (i % 4 == 0)
-              {
-                <i class="icon-book"></i>  
-                <i class='icon-info-sign'></i>
-              }  <a href="#" class="btn btn-mini p" style="margin-right: 2px" rel="popover" data-content="@text" data-original-title="@title"> @title </a>
-            }
-            else
-            {
-                text += "<span class='label label-important'> услуга сейчас не доступна</span>";
-                <span class=" p label" rel="popover"  style="margin-right: 2px" data-content="@text" data-original-title="@title"> @title @if (i % 4 == 0)
-                                                                                                                                          {
-                <i class='icon-info-sign icon-white'></i>
-                                                                                                                                          }</span>
-            }
-        }*@
+
+
         @for (int i = 1; i <= 11; i++)
         {
-            @*<li><i class="icon-book"></i>  
-                <i class='icon-info-sign'></i> <a class="btn btn-mini">Услуга</a><a> Заказать</a></li>*@
             <a class="btn btn-mini">Услуга</a>
         }
         <a class="btn btn-large">Заказать услугу</a>
 
 
         </div>
+*@
+       <div class="span3">
+      <h3>Multiselect</h3>
+    <select data-placeholder="Choose a country..." style="width:350px;" multiple class="chzn-select"">
+    <option value="1">1</option>
+    <option value="2" selected="selected">2</option>
+    <option value="3" selected="selected">3</option>
+    </select>
+</div>
     </div>
+
 </div>
 
 <div class="span5">
@@ -77,13 +58,21 @@
     @Html.Partial("CompanyNavigation", Model.Navigation)
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(function() {
-            $(".p")
-                .popover();
 
+
+@section Script{
+<link href="../../Scripts/chosen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../Scripts/chosen.jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(function () {
+            $(".p") .popover();
+
+            $(".chzn-select").chosen({ no_results_text: "No results matched" });
         });
     });
 
 </script>
+
+}
