@@ -1,7 +1,7 @@
 ﻿@model CompanyStatisticViewModel
 
     <ul class="nav nav-list well">
-        <li @(Model.Selected == "1" ? "class=active" : "")><a href="@Url.Action("Details", "Companies", new { id = Model.CompanyId })"><i class="icon-home"></i> Основная информация</a></li>
+        <li @(Model.Selected == "1" ? "class=active" : "")><a href="@Url.Action("Details", "Companies", new { id = Model.CompanyId })"><i class="icon-home"></i> Главная</a></li>
         <li @(Model.Selected == "2" ? "class=active" : "")><a href="@Url.Action("Reviews", "Companies", new { id = Model.CompanyId })"><i class="icon-comment"></i> Отзывы (@Model.ReviewCount)</a></li>
 @*        <li @(Model.Selected == "3" ? "class=active" : "")><a href="@Url.Action("Services", "Companies", new { id = Model.CompanyId })"><i class="icon-wrench"></i> Услуги (4)</a></li>*@
         <li @(Model.Selected == "4" ? "class=active" : "")><a href="@Url.Action("Photos", "Companies", new { id = Model.CompanyId })"><i class="icon-camera"></i> Фотографии</a></li>
