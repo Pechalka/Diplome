@@ -15,7 +15,8 @@ namespace Domain.PersistenceHandlers
                                 {
                                     Id = @event.AggregateRootId,
                                     Name = @event.Name,
-                                    Description = @event.Description
+                                    Description = @event.Description,
+                                    Category = @event.Category
                                 });
 
             var companyDetails = MongoHelper.GetCollectionOf<CompanyDetailsViewModel>();

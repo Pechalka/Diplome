@@ -58,6 +58,7 @@
     <Compile Include="CompaniesControllerTests.cs" />
     <Compile Include="MongoHelper.cs" />
     <Compile Include="MOngoTests.cs" />
+    <Compile Include="PagegTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

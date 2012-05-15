@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using Diplom.HtmlHalpers;
+using Diplom.ViewModels;
 using Domain;
 using Domain.Commands;
 using Domain.ViewModel;
-using Domain.ViewModel.Queries;
+using Infrastructure;
 using Infrastructure.CQRS;
+using MongoDB.Driver.Builders;
 
 namespace Diplom.Controllers
 {
@@ -79,18 +83,26 @@ namespace Diplom.Controllers
                           RedirectToAction("Change"));
         }
 
+        public int PageSize = 12;
 
         public ActionResult List(string category = "", int page = 1)
         {
-            return
-                For<CompaniesListViewModel>()
-                .Execute<IGetPageOfCompaniesQuery>()
-                .WithParams(q =>
-                {
-                    q.Category = category;
-                    q.Page = page;
-                    q.PageSize = 10;
-                });
+            long totalItem;
+            var query = !string.IsNullOrEmpty(category) ? Query.EQ("Category", category.ToUpper()) : null;
+            var companies = Collection<CompanyViewModel>().GetPage(query, page, PageSize, out totalItem);
+            var pageInfo = new PagingInfo
+                               {
+                                   CurrentPage = page,
+                                   ItemsPerPage = PageSize,
+                                   TotalItem = (int)totalItem
+                               };         
+
+            return View(new CompaniesListViewModel
+            {
+                Companies = companies,
+                PagingInfo = pageInfo,
+                Category = category
+            });
         }
 
         public ActionResult Services(Guid id)

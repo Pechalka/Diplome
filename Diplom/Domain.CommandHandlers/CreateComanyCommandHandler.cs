@@ -14,9 +14,9 @@ namespace Domain.CommandHandlers
         }
 
 
-        public override void Handle(CreateComanyCommand command)
+        public override void Handle(CreateComanyCommand create)
         {
-            var company = new Company(command.CompanyId, command.Name, command.Description);
+            var company = new Company(create);
             _repository.Save(company);
         }
     }

@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Web.Mvc;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using SimpleCqrs.Commanding;
 
 namespace Infrastructure.CQRS
 {
     public class CQRSController : Controller
     {
+        public MongoCollection<T> Collection<T>()
+        {
+            return MongoHelper.GetCollectionOf<T>();
+        }
+
+
         public QueryFor<TResult> For<TResult>() 
         {
             return new QueryFor<TResult>(View());

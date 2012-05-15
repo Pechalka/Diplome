@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompaniesListViewModel.cs" />
     <Compile Include="CompanyDetailsViewModel.cs" />
     <Compile Include="CompanyNavigationViewModel.cs" />
     <Compile Include="CompanyReviewsViewModel.cs" />

@@ -1,4 +1,6 @@
 ﻿@using Diplom
+@using Diplom.HtmlHalpers
+@using Diplom.ViewModels
 @model CompaniesListViewModel
 
 @{
@@ -49,7 +51,7 @@
             }
     }     
  
-    @Html.PageLinks(Model.CurrentPage, Model.TotalPages, page => Url.Action("List", "Companies", new { Model.Category, page }));
+    @Html.PageLinks(Model.PagingInfo, page => Url.Action("List", "Companies", new { Model.Category, page }));
 </div>
 <div class="span3" >    
     <ul class="nav nav-list well">

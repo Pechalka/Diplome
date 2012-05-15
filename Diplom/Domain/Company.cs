@@ -7,9 +7,9 @@ namespace Domain
 {
     public class Company : AggregateRoot
     {
-        public Company(Guid id, string name, string description)
+        public Company(CreateComanyCommand create)
         {
-            Apply(new CompanyAddedEvent { AggregateRootId  = id, CompanyId = id, Name = name, Description = description });
+            Apply(new CompanyAddedEvent { AggregateRootId = create.CompanyId,  Name = create.Name, Description = create.Description, Category = create.Category});
         }
 
         public Company()

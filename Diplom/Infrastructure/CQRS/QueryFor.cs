@@ -25,7 +25,11 @@ namespace Infrastructure.CQRS
         public IList<TResult> GetPage(int page,int pageSize, out int totalPages)
         {
             var collection = MongoHelper.GetCollectionOf<TResult>();
-            return collection.GetPage(null, page, pageSize, out totalPages);
+            long _totalPages;
+            var r = collection.GetPage(null, page, pageSize, out _totalPages);
+
+            totalPages = (int)_totalPages;
+            return r;
         }
 
         public IList<TResult> All()
