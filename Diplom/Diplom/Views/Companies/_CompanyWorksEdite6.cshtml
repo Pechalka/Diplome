@@ -1,0 +1,17 @@
+﻿@model List<CompanyWork>
+
+<div class="row">
+    @foreach (var work in Model)
+    {
+        <div class="span6">
+        @using(Html.BeginForm("DeleteWork", "Companies"))
+        {
+            @Html.Hidden("companyId", ViewData["CompanyId"])
+            @Html.Hidden("workId", work.WorkId)
+            <h3>@work.Title</h3>
+            <p>@work.Text</p>   
+            <input type="submit" class="btn btn-mini btn-danger" value="Удалить"/>          
+        }
+        </div>    
+    }
+</div>

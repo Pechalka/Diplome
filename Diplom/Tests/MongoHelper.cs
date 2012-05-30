@@ -105,13 +105,13 @@ namespace Tests
             return database.GetCollection<TDocument>(collectionName);
         }
 
-        public static void SetPrivateFieldsFindOn()
-        {
-            var conventionProfile = ConventionProfile.GetDefault()
-                .SetMemberFinderConvention(new PrivateMemberFinderConvention());
+        //public static void SetPrivateFieldsFindOn()
+        //{
+        //    var conventionProfile = ConventionProfile.GetDefault()
+        //        .SetMemberFinderConvention(new PrivateMemberFinderConvention());
 
-            BsonClassMap.RegisterConventions(conventionProfile, type => type.BaseType == typeof(Entity));
+        //    BsonClassMap.RegisterConventions(conventionProfile, type => type.BaseType == typeof(Entity));
 
-        }
+        //}
     }
 }

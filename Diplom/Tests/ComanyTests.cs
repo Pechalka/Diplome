@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Xunit;
 
 namespace Tests
@@ -66,4 +67,6 @@ namespace Tests
 //        //    Assert.Equal("nologo.jpg", c.LogoImg);
 //        //}
 //    }
+
+
 }

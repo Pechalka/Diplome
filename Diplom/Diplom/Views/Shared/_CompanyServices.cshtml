@@ -1,0 +1,22 @@
+﻿@model List<string>
+
+        <div class="span4">
+        <div class="row">
+        <h2 class="span2" > услуги</h2> 
+        
+        <div  class="span2" style="vertical-align: middle">
+            @Html.ActionLink("редактировать", "Change", "Companies", new { id = Guid.NewGuid() }, new { @class = "btn  btn-primary btn-mini " })
+
+        </div>
+        
+        </div>
+        
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <a class="btn btn-mini">@Model[i]</a>
+        }
+        
+
+           
+        </div>

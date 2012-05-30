@@ -1,0 +1,48 @@
+﻿@using Diplom.ViewModels
+@model UsersListForm
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                    <span class="divider">/</span>
+                    <li>
+                            <li class="active">Список пользователей</li>   
+                    </li>
+                </ul>
+}
+
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Пользователь
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Users) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+            /
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+        <a class="btn-danger"></a>
+            @Html.ActionLink(item.IsActive ? "Выключить" : "Включить", "SetUserState", new { userId = item.Id, newState = !item.IsActive, page = Model.PagingInfo.CurrentPage }, new { @class = (!item.IsActive ? "btn-success" : "btn-danger") + " btn" })
+     
+        </td>
+    </tr>
+}
+
+</table>
+    @Html.PageLinks(Model.PagingInfo, page => Url.Action("List", "Account", new { page }));

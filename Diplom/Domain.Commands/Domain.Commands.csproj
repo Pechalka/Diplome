@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddReviewToCompanyCommand.cs" />
+    <Compile Include="AddWorkCommand.cs" />
     <Compile Include="ChangeCompanyCommand.cs" />
     <Compile Include="CreateComanyCommand.cs" />
+    <Compile Include="DeleteWorkCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Diplom.HtmlHalpers;
+using Diplom.Models;
 using Diplom.ViewModels;
-using Domain;
 using Domain.Commands;
 using Domain.ViewModel;
 using Infrastructure;
@@ -13,14 +11,83 @@ using MongoDB.Driver.Builders;
 
 namespace Diplom.Controllers
 {
+
     public class CompaniesController : CQRSController
     {
+        private readonly IAuthProvider _authProvider;
+
+        public CompaniesController(IAuthProvider authProvider)
+        {
+            _authProvider = authProvider;
+        }
+
         public ActionResult Details(Guid id)
         {
-            var form = For<CompanyDetailsViewModel>().GetBy(id);
-            form.Navigation.Selected = "1";
+            var form = For<DetailsViewModel>().GetBy(id);
+
+            form.SetPermission(_authProvider.CurrentUserId);
             return View(form);
         }
+
+        public ActionResult Photos(Guid id)
+        {
+            var company = For<PhotosCompanyDetailsViewModel>().GetBy(id);
+            company.SetPermission(_authProvider.CurrentUserId);
+
+            return View(company);
+        }
+
+        [HttpGet]
+        public ActionResult Reviews(Guid id)
+        {
+            var form = For<ReviewCompanyDetailsViewModel>().GetBy(id);
+            form.SetPermission(_authProvider.CurrentUserId);
+
+            return View(form);
+        }
+
+        public ActionResult Work(Guid id)
+        {
+            var form = For<CompanyWorksPage>().GetBy(id);
+            form.SetPermission(_authProvider.CurrentUserId);
+
+            return View(form);
+        }
+
+        [HttpGet]
+        public ActionResult WorkEdit(Guid id)
+        {
+            var form = For<CompanyWorksPage>().GetBy(id);
+            form.SetPermission(_authProvider.CurrentUserId);
+
+            return View(form);
+        }
+
+        [HttpPost]
+        public ActionResult WorkEdit(Guid companyId, CompanyWork form)
+        {
+            var command = new AddWorkCommand
+                              {
+                                  CompanyId = companyId,
+                                  WorkId = form.WorkId,
+                                  WorkText = form.Text,
+                                  WorkTitle = form.Title
+                              };
+
+            return Handle(command,
+                          RedirectToAction("WorkEdit", new {id = companyId}),
+                          RedirectToAction("WorkEdit", new {id = companyId}));
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View(new CreateComanyCommand
+                            {
+                                OwnerUserId = _authProvider.CurrentUserId
+                            });
+        }
+
 
         [HttpPost]
         public ActionResult Create(CreateComanyCommand form)
@@ -28,26 +95,8 @@ namespace Diplom.Controllers
             form.CompanyId = Guid.NewGuid();
 
             return Handle(form,
-                RedirectToAction("Details", new { id = form.CompanyId }), 
+                RedirectToAction("Details", new { id = form.CompanyId }),
                 RedirectToAction("Create"));
-        }
-
-        [HttpGet]
-        public ActionResult Create()
-        {
-            return View(new CreateComanyCommand());
-        }
-
-
-
-
-
-        [HttpGet]
-        public ActionResult Reviews(Guid id)
-        {
-            var form = For<CompanyReviewsViewModel>().GetBy(id);
-            form.Navigation.Selected = "2";
-            return View(form);
         }
 
         [HttpPost]
@@ -58,22 +107,15 @@ namespace Diplom.Controllers
             return Handle(form, redirect, redirect);
         }
 
-
-        public ActionResult Photos()
-        {
-          //  var company = For<CompanyViewModel>().GetBy(id);
-           // return View(company);
-            return View();
-        }
-
         [HttpGet]
-        public ViewResult Change(Guid id)
+        public ActionResult Change(Guid id)
         {
-            var viewModel = For<CompanyDetailsViewModel>().GetBy(id);
-            viewModel.Navigation.Selected = "1";
+            var form = For<DetailsViewModel>().GetBy(id);
+            form.SetPermission(_authProvider.CurrentUserId);
 
-            return View(viewModel);
+            return View(form);
         }
+
 
         [HttpPost]
         public ActionResult Change(ChangeCompanyCommand form)
@@ -105,48 +147,34 @@ namespace Diplom.Controllers
             });
         }
 
-        public ActionResult Services(Guid id)
-        {
-            var viewModel = For<CompanyDetailsViewModel>().GetBy(id);
-            viewModel.Navigation.Selected = "3";
-
-            return View(viewModel);
-        }
 
 
         public ActionResult Test()
         {
             return View();
         }
+
+        public ActionResult DeleteWork(Guid companyId, Guid workId)
+        {
+            var command = new DeleteWorkCommand
+                              {
+                                  CompanyId = companyId,
+                                  WorkId = workId
+                              };
+
+            return Handle(command,
+                          RedirectToAction("WorkEdit", new { id = companyId }),
+                          RedirectToAction("WorkEdit", new { id = companyId }));
+        }
     }
 
 
 
-    public class ServiceViewModel
-    {
-        public string Price { get; set; }
-        public bool HasPrice
-        {
-            get { return string.IsNullOrEmpty(Price); }
-        }
-        public string Decscription { get; set; }
-        public bool HasDecscription
-        {
-            get { return string.IsNullOrEmpty(Decscription); }
-        }
 
 
-        public string Title { get; set; }
-        
-        
-        public bool ReadyNow { get; set; }
-        
-    }
+
 
 }
-
-
-
 
 
 

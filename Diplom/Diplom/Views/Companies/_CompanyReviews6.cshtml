@@ -1,0 +1,22 @@
+﻿@model List<CompanyReviewViewModel>
+
+
+    @foreach (var review in Model)
+    {
+                <div class="row">
+                    <div class="span6">
+                       
+                        <h3>
+                        @if (review.IsGood)
+                        {
+                            <span class="label label-success">хорошо</span>
+                        }
+                        else
+                        {
+                            <span class="label label-important">плохо</span>
+                        }
+                        <small> @review.Date</small></h3>
+                        <p>@review.Text</p>
+                    </div>
+                </div>
+    }

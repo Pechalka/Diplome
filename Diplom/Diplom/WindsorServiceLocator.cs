@@ -4,6 +4,7 @@ using System.Linq;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using Diplom.Models;
 using Domain.ViewModel;
 using Infrastructure.CQRS;
 using SimpleCqrs;
@@ -27,6 +28,8 @@ namespace Diplom
             //             );
 
             //  _container.Register(AllTypes.FromAssemblyNamed("SimpleCqrs").Pick().WithService.FirstInterface());
+
+            
 
 
             _container.Register(Component.For<DomainEventHandlerFactory>());

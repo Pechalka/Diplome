@@ -1,8 +1,9 @@
-﻿@model CompanyDetailsViewModel
+﻿@model DetailsViewModel
 
 @{
-    ViewBag.Title = Model.Name;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.CompanyName;
+    Layout = "~/Views/Shared/_CompanyDetailsViewModel.cshtml";
+    ViewBag.SelectedNavigation = "1";
 }
 
 @section Breadcrumb{
@@ -12,81 +13,16 @@
                 </li>
                     <span class="divider">/</span>
                     <li>
-                            <li class="active">@Model.Name</li>   
+                            <li class="active">@Model.CompanyName</li>   
                     </li>
                 </ul>
 }
 
+@section Main{
+        <h1>@Model.CompanyName</h1>
+        <p>@Model.CompanyDescription</p>
 
-<div class="span4">
-    <a href="#" class="thumbnail">
-        <img src="http://placehold.it/360x268" alt="">
-    </a>
-
-                <div class="row">
-        <div class="span4">
-        <div class="row">
-        <h2 class="span2" > услуги</h2> 
-        
-        <div  class="span2" style="vertical-align: middle">
-        @Html.ActionLink("редактировать", "Change", "Companies", new { id = Model.Id }, new { @class = "btn  btn-primary btn-mini " })
-
-        </div>
-        
-        </div>
-        
-
-        @for (int i = 1; i <=9 ; i++)
-        {
-            <a class="btn btn-mini">Услуга</a>
-        }
-        
-
-           
-        </div>
-        <div class="span4">
-        <a class="btn btn-large btn-primary" style="margin-top: 10px;">Заказать услугу</a>
-        </div>
- </div>
-</div>
-
-@*<div class="span5">
-        <h1>@Model.Name<small> @Model.Address</small></h1>
-        <p>@Model.Description</p>
-    @Html.ActionLink("редактировать", "Change", "Companies", new { id = Model.Id }, new { @class = "btn  btn-primary btn-mini" })
-   
-        <div class="row">
-        <div class="span5">
-        <h2>Новости</h2>
-        
-        </div>
-         @for (var i = 0; i <= 5; i ++ ){
-<div class="span5">
-Полноценным тест-драйвом это назвать нельзя. Можно сказать, встреча друзей. Просто когда у менеджера Opel по восточной Европе Андраша Сальго предоставилась возможность, он пригласил нас в Ригу прокатиться на новом фургоне Opel Combo и про
-</div>
-             <hr class="span5"/>
-    }
-</div>        
-        </div>*@
-
-<div class=" span6 ">
-            <textarea class="input-xxlarge" cols="20" id="Text" name="Text" rows="5"></textarea>
-            <input data-val="true" data-val-required="Требуется поле CompanyId." id="CompanyId" name="CompanyId" type="hidden" value="d6f65521-b94f-4e3d-b9ea-6fd784bd8c05">
-            <div class="row">
-                <div class="span4">
-                    <label class="radio">
-                        <input data-val="true" data-val-required="Требуется поле Type." id="Type" name="Type" type="radio" value="Good">
-                        <span class="label label-success">Хорошо</span>
-                    </label>
-                    <label class="radio">
-                        <input id="Type" name="Type" type="radio" value="Bad">
-                        <span class="label label-important">Плохо</span>
-                    </label>
-                </div>
-                <div class="span2"><input type="submit" class="btn btn-large" value="Добавить отзыв"></div>
-            </div>
-        </div>
-
-<div class="span2">    
-    @Html.Partial("CompanyNavigation", Model.Navigation)
-</div>
+            @Html.ActionLink("редактировать", "Change", "Companies", new {id = Model.CompanyId}, new {@class = "btn  btn-primary btn-mini"})
+ 
+            @Html.Partial("_CompanyNews6", @Model.News)
+}

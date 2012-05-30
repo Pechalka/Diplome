@@ -1,7 +1,8 @@
-﻿@model CompanyReviewsViewModel
+﻿@model ReviewCompanyDetailsViewModel
 @{
-    ViewBag.Title = Model.Name;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.CompanyName;
+    Layout = "~/Views/Shared/_CompanyDetailsViewModel.cshtml";
+    ViewBag.SelectedNavigation = "2";
 }
 @section Breadcrumb{
     <ul class="breadcrumb">
@@ -10,7 +11,7 @@
                 </li>
                 <li>
                     <span class="divider">/</span>
-                    @Html.ActionLink(Model.Name, "Details", "Companies", new { id = Model.Id }, null)  
+                    @Html.ActionLink(Model.CompanyName, "Details", "Companies", new { id = Model.CompanyId }, null)  
                 </li>
                 <li>
                     <span class="divider">/</span>
@@ -18,37 +19,9 @@
                 </li>
     </ul>
 }
-<div class="span9">
 
+@section Main{
 
-    @foreach (var review in Model.Reviews)
-    {
-                <div class="row">
-                    <div class="span2 ">
-                        <a  class="thumbnail">
-                            <img src="http://placehold.it/160x120" alt="">
-                        </a>
-                        
-                    </div>
-                    <div class="span7">
-                       
-                        <h3>
-                        @if (review.IsGood)
-                        {
-                            <span class="label label-success">хорошо</span>
-                        }
-                        else
-                        {
-                            <span class="label label-important">плохо</span>
-                        }
-                        <small> @review.Date</small></h3>
-                        <p>@review.Text</p>
-                    </div>
-                </div>
-    }
-
-    @Html.Partial("_AddReviewForm", new AddReviewToCompanyCommand { CompanyId = Model.Id })
-</div>
-<div class="span3">    
-    @Html.Partial("CompanyNavigation", Model.Navigation)
-</div>
+    @Html.Partial("_AddReviewForm6", new AddReviewToCompanyCommand { CompanyId = Model.CompanyId })
+    @Html.Partial("_CompanyReviews6", Model.Reviews)
+}

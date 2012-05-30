@@ -18,9 +18,9 @@ namespace Domain.PersistenceHandlers
                 Description = evt.Description
             });
 
-            var update = Update.Set("Name", evt.Name).Set("Description", evt.Description).Set("Address", evt.Address);
+            var update = Update.Set("CompanyName", evt.Name).Set("CompanyDescription", evt.Description).Set("CompanyAddress", evt.Address);
 
-            MongoHelper.GetCollectionOf<CompanyDetailsViewModel>()
+            MongoHelper.GetCollectionOf<DetailsViewModel>()
                 .Update(Query.EQ("_id", evt.AggregateRootId), update);
 
 

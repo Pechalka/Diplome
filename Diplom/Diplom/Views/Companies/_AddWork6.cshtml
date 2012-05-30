@@ -1,0 +1,11 @@
+﻿@model CompanyWork
+
+@using(Html.BeginForm())
+{
+     @Html.Hidden("companyId", ViewData["CompanyId"])
+     @Html.HiddenFor(_=>_.WorkId)
+    <p>Загаловак @Html.TextBoxFor(_ => _.Title)</p>
+    
+    <p>Описание  @Html.TextAreaFor(_ => _.Text)</p>
+    <input type="submit" class="btn btn-large" value="Добавить вакансию"/>
+}

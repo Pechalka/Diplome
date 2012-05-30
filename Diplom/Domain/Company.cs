@@ -2,6 +2,7 @@
 using Domain.Commands;
 using Domain.Events;
 using SimpleCqrs.Domain;
+using SimpleCqrs.Eventing;
 
 namespace Domain
 {
@@ -9,7 +10,7 @@ namespace Domain
     {
         public Company(CreateComanyCommand create)
         {
-            Apply(new CompanyAddedEvent { AggregateRootId = create.CompanyId,  Name = create.Name, Description = create.Description, Category = create.Category});
+            Apply(new CompanyAddedEvent { AggregateRootId = create.CompanyId, UserId  =  create.OwnerUserId, Name = create.Name, Description = create.Description, Category = create.Category});
         }
 
         public Company()
@@ -42,5 +43,27 @@ namespace Domain
                            });
         }
 
+        public void AddWork(AddWorkCommand command)
+        {
+            var evnt = new AddWorkEvent
+                           {
+                               AggregateRootId = command.CompanyId,
+                               WorkId = command.WorkId,
+                               WorkText = command.WorkText,
+                               WorkTitle = command.WorkTitle
+                           };
+            Apply(evnt);
+        }
+
+        public void DeleteWork(DeleteWorkCommand command)
+        {
+            var evnt = new WorkDeletedEvent
+                          {
+                              AggregateRootId = command.CompanyId,
+                              WorkId = command.WorkId
+                          };
+            Apply(evnt);
+        }
     }
 }
+

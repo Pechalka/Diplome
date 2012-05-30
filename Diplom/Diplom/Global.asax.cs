@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Diplom.Models;
 using Domain;
 using Domain.PersistenceHandlers;
 using Domain.ViewModel;
@@ -43,6 +46,13 @@ namespace Diplom
 
             DependencyResolver.SetResolver(Runtime.ServiceLocator);
 
+            var container = new WindsorContainer();
+
+            container.Register(Component.For<IUserRepository>().ImplementedBy<UserRepository>());
+            container.Register(Component.For<IAuthProvider>().ImplementedBy<FormAuthProvider>());
+
+            ControllerBuilder.Current.SetControllerFactory(new CastleControllerFactory(container));
+
             ReCreateReadModels();
         }
 
@@ -50,15 +60,17 @@ namespace Diplom
         private static void ReCreateReadModels()
         {
             MongoHelper.GetCollectionOf<CompanyViewModel>().RemoveAll();
-            MongoHelper.GetCollectionOf<CompanyReviewsViewModel>().RemoveAll();
-            MongoHelper.GetCollectionOf<CompanyDetailsViewModel>().RemoveAll();
-
+            MongoHelper.GetCollectionOf<PhotosCompanyDetailsViewModel>().RemoveAll();
+            MongoHelper.GetCollectionOf<ReviewCompanyDetailsViewModel>().RemoveAll();
+            MongoHelper.GetCollectionOf<CompanyWorksPage>().RemoveAll();
 
             var eventPlayer = new DomainEventReplayer(Runtime);
             
             eventPlayer.ReplayEventsForHandlerType(typeof(CompanyAddedEventHandler));
             eventPlayer.ReplayEventsForHandlerType(typeof(CompanyUpdatedEventHandler));
             eventPlayer.ReplayEventsForHandlerType(typeof(CompantReviewAddedEventHandler));
+            eventPlayer.ReplayEventsForHandlerType(typeof(WorkDeletedEventHandler));
+            eventPlayer.ReplayEventsForHandlerType(typeof(AddWorkEventHandler));
         }
 
 
@@ -75,6 +87,32 @@ namespace Diplom
         protected void Application_End()
         {
             Runtime.Shutdown();
+        }
+    }
+
+    public class CastleControllerFactory : DefaultControllerFactory
+    {
+        private readonly IWindsorContainer _container;
+
+        public CastleControllerFactory(IWindsorContainer container)
+        {
+            _container = container;
+            _container.Register(
+                AllTypes.FromThisAssembly()
+                    .BasedOn<IController>()
+                    .Configure(c => c.LifestyleTransient()));
+        }
+
+        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
+        {
+            if (controllerType != null)
+            {
+                return (IController)_container.Resolve(controllerType);
+            }
+            else
+            {
+                return base.GetControllerInstance(requestContext, controllerType);
+            }
         }
     }
 }

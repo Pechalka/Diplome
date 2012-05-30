@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddReviewToCompanyCommandHandler.cs" />
+    <Compile Include="AddWorkCommandCommandHandler.cs" />
     <Compile Include="ChangeCompanyCommandHandler.cs" />
     <Compile Include="CreateComanyCommandHandler.cs" />
+    <Compile Include="DeleteWorkCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

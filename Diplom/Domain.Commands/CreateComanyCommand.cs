@@ -18,6 +18,8 @@ namespace Domain.Commands
 
         public string Category { get; set; }
 
+        public Guid OwnerUserId { get; set; }
+
         public List<SelectListItem> CategoriesDropdown
         {
             get

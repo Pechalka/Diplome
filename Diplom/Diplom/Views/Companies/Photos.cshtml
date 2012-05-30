@@ -1,7 +1,8 @@
-﻿@*@model CompanyViewModel*@
+﻿@model PhotosCompanyDetailsViewModel
 @{
     ViewBag.Title = "sdf";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_CompanyDetailsViewModel.cshtml";
+    ViewBag.SelectedNavigation = "3";
 }
 
 @section Breadcrumb{
@@ -11,7 +12,7 @@
                 </li>
                 <li>
                     <span class="divider">/</span>
-                    @Html.ActionLink("sdfg", "Details", "Companies", new { id = Guid.NewGuid() }, null)  
+                    @Html.ActionLink(Model.CompanyName, "Details", "Companies", new { id = Model.CompanyId }, null)  
                 </li>
                 <li>
                     <span class="divider">/</span>
@@ -19,18 +20,15 @@
                 </li>
                 </ul>
 }
-<div class="span9">
-<div class="row">
-    @for (int n = 1; n <= 4; n++)
+
+@section Main{
+    @Html.Partial("_CompanyPhotos6", Model.Photos)
+    @using(Html.BeginForm())
     {
-        <div class="span3">
-            <a href="#" class="thumbnail">
-                <img src="http://placehold.it/260x180" alt="">
-            </a>
-        </div>
+        <input type="file"/>
+        <input type="submit" value="Добавить фото" class="btn"/>
     }
-    </div>
-</div>
-<div class="span3">    
-    @Html.Partial("CompanyNavigation", new CompanyStatisticViewModel { CompanyId = Guid.NewGuid(), Selected = "4" })
-</div>
+}
+
+
+

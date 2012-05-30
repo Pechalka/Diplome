@@ -1,0 +1,11 @@
+﻿@model List<CompanyWork>
+
+<div class="row">
+    @foreach (var work in Model)
+    {
+        <div class="span6">
+        <h3>@work.Title</h3>
+        <p>@work.Text</p>
+        </div>    
+    }
+</div>

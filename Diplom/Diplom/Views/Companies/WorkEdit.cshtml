@@ -1,0 +1,29 @@
+﻿@model CompanyWorksPage
+
+@{
+    ViewBag.Title = "Work";
+    Layout = "~/Views/Shared/_CompanyDetailsViewModel.cshtml";
+    ViewBag.SelectedNavigation = "4";
+    ViewData["CompanyId"] = Model.CompanyId;
+}
+
+@section Breadcrumb{
+    <ul class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Главная", "List", "Companies") 
+                </li>
+                <li>
+                    <span class="divider">/</span>
+                    @Html.ActionLink(Model.CompanyName, "Details", "Companies", new { id = Model.CompanyId }, null)  
+                </li>
+                <li>
+                    <span class="divider">/</span>
+                    Вакансии 
+                </li>
+    </ul>
+}
+
+@section Main{
+    @Html.Partial("_AddWork6", new CompanyWork{ WorkId = Guid.NewGuid()})
+    @Html.Partial("_CompanyWorksEdite6", Model.Works)
+}

@@ -64,6 +64,19 @@
         <li @(Model.Category == "ОБРАЗОВАНИЕ, КУРСЫ" ? "class=active" : "")>@Html.ActionLink("ОБРАЗОВАНИЕ, КУРСЫ", "List", "Companies", new { category = "ОБРАЗОВАНИЕ, КУРСЫ" }, null)</li>
         <li @(Model.Category == "МЕБЕЛЬ И ИНТЕРЬЕР" ? "class=active" : "")>@Html.ActionLink("МЕБЕЛЬ И ИНТЕРЬЕР", "List", "Companies", new { category = "МЕБЕЛЬ И ИНТЕРЬЕР" }, null)</li>
     </ul>
-    @Html.ActionLink("Создать компанию", "Create", null, new { @class = "btn btn-large", style = "margin: 10px" })
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Создать компанию", "Create", null, new { @class = "btn btn-large", style = "margin: 10px" })    
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        @: Hello @User.Identity.Name <a href="@Url.Action("LogOff", "Account")">Выйти</a>
+    }
+    else
+    {
+        @Html.ActionLink("Войти", "LogOn", "Account", null, new { @class = "btn btn-large", style = "margin: 10px" })
+    }
+     
+    @Html.ActionLink("Зарегистрироватся", "Registration", "Account", null, new { @class = "btn btn-large", style = "margin: 10px" })
 </div>
 

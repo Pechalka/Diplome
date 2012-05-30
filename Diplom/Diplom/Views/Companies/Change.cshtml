@@ -1,8 +1,9 @@
-﻿@model CompanyDetailsViewModel
+﻿@model DetailsViewModel
 
 @{
-    ViewBag.Title = Model.Name;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.CompanyName;
+    Layout = "~/Views/Shared/_CompanyDetailsViewModel.cshtml";
+    ViewBag.SelectedNavigation = "1";
 }
 
 @section Breadcrumb{
@@ -12,37 +13,54 @@
                 </li>
                     <span class="divider">/</span>
                     <li>
-                            <li class="active">@Model.Name</li>   
+                            <li class="active">@Model.CompanyName</li>   
                     </li>
                 </ul>
 }
 
 
-<div class="span4">
-    <a href="#" class="thumbnail">
-        <img src="http://placehold.it/360x268" alt="">
-        </a>
 
-</div>
 
-<div class="span5">
-    @using (Html.BeginForm()){
-        @Html.LabelFor(_=>_.Name, "Название")
-        @Html.TextBoxFor(_=>_.Name)
-        @Html.LabelFor(_=>_.Address, "Адрес")    
-        @Html.TextBoxFor(_=>_.Address)
-        @Html.LabelFor(_=>_.Description, "Описание")
-        @Html.TextAreaFor(_=>_.Description)
-        @Html.Hidden("CompanyId", Model.Id)
-        
-        <div class="form-actions">
-            <input type="submit" class="btn btn-primary" value="Сохранить"/>
-            @Html.ActionLink("Отмена", "Details", "Companies", new { id = Model.Id }, new { @class = "btn" })
-          </div>
 
+
+@section Main{    
+@using(Html.BeginForm()){
+        <p> @Html.TextArea("Name", Model.CompanyName)</p>
+         <p> @Html.TextArea("Address", Model.CompanyAddress)</p>
+        <p> @Html.TextArea("Description", Model.CompanyDescription)</p>
+        @Html.Hidden("CompanyId", Model.CompanyId)
+
+        <input type="submit" class="btn"/>
+        <a href="@Url.Action("Details", null, new { id = Model.CompanyId})" class="btn">Отмена</a>
     }
-</div>
+            @Html.ActionLink("редактировать", "Change", "Companies", new {id = Model.CompanyId}, new {@class = "btn  btn-primary btn-mini"})
+ 
+            @Html.Partial("_CompanyNews6", @Model.News)
+}
 
-<div class="span3">    
-    @Html.Partial("CompanyNavigation", Model.Navigation)
-</div>
+
+@section Service{
+<div class="span4">
+@using(Html.BeginForm()){
+    @Html.ListBox("Service", Model.ServicesAll, new { dataPlaceholder="Choose a country..."  , style="width:350px", @class="chzn-select" } )
+        <input type="submit" value="Изменить услуги" class="btn"/>
+}
+    </div>
+}
+
+@section Script{
+<link href="../../Scripts/chosen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../Scripts/chosen.jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(function () {
+            $(".p").popover();
+
+            $(".chzn-select").chosen({ no_results_text: "No results matched" });
+        });
+    });
+
+</script>
+
+}

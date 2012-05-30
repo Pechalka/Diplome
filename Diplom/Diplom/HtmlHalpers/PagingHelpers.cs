@@ -22,11 +22,11 @@ namespace Diplom.HtmlHalpers
 
         public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pageInfo, Func<int, string> pageUrlDelegate)
         {
-            if (pageInfo.TotalPage <= 1)
+            if (pageInfo.TotalPages <= 1)
                 return new MvcHtmlString(string.Empty);
 
             var result = new StringBuilder();
-            for (int page = 1; page <= pageInfo.TotalPage; page++)
+            for (int page = 1; page <= pageInfo.TotalPages; page++)
             {
                 var a = new TagBuilder("a") { InnerHtml = page.ToString()};
                 a.MergeAttribute("href", pageUrlDelegate(page));
