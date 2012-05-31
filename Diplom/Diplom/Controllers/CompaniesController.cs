@@ -125,7 +125,7 @@ namespace Diplom.Controllers
                           RedirectToAction("Change"));
         }
 
-        public int PageSize = 12;
+        public int PageSize = 3;
 
         public ActionResult List(string category = "", int page = 1)
         {
